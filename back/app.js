@@ -1,6 +1,5 @@
 const express = require("express");
 const helmet = require("helmet");
-const bodyParser = require("body-parser");
 const sauceRoutes = require("./routes/sauce");
 const userRoutes = require("./routes/user");
 require("dotenv").config();
@@ -9,23 +8,19 @@ const mongoSanitize = require("express-mongo-sanitize");
 
 const mongoose = require("mongoose");
 mongoose
-  .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/?retryWrites=true&w=majority`,
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+  .connect(`${process.env.DB_CONNECT}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
-
-  
 
 const app = express();
 app.use(
   helmet({
-   
     crossOriginResourcePolicy: false,
   })
 );
-
 
 const rateLimit = require("express-rate-limit");
 const limiter = rateLimit({
@@ -38,8 +33,7 @@ const limiter = rateLimit({
 // Apply the rate limiting middleware to all requests
 app.use(limiter);
 
-
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(mongoSanitize());
 
 app.use((req, res, next) => {
