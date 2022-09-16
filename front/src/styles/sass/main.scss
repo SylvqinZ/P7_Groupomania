@@ -1,1 +1,13 @@
-@import "./pages/home"
+/* BASE */
+@import "./base/reset", "./base/typography" ;
+
+/* PAGES */
+@import "./pages/home";
+
+
+/*LAYOUT*/
+@import "./layout/header", "./layout/footer";
+
+
+/*UTILS*/
+@import "./utils/mixins", "./utils/variables";

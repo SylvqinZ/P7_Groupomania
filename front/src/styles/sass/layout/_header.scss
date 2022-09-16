@@ -1,0 +1,21 @@
+.header {
+  padding: 16px;
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  background-color: rgb(0, 0, 0);
+  height: 70px;
+  
+
+  &__logo{
+    width: 250px;
+  
+    
+  }
+  &__nav ul {
+    display: inline-flex;
+    margin: 1rem;
+    
+  }
+  
+}

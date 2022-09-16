@@ -7,23 +7,25 @@ import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import Logout from "./pages/Logout";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
-import "./styles/css/style.css"
+import "./styles/css/style.css";
+
 
 ReactDOM.render(
   <React.StrictMode>
+    
     <Router>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Create" element={<Create />} />
         <Route path="/Signup" element={<Signup />} />
-        <Route path="/Signin" element={<Signin  />} />
-        <Route path="/Logout" element={<Logout  />} />
-      
+        <Route path="/Signin" element={<Signin />} />
+        <Route path="/Logout" element={<Logout />} />
       </Routes>
     </Router>
+    <Footer />
   </React.StrictMode>,
   document.getElementById("root")
 );
-
