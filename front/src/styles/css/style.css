@@ -46,7 +46,8 @@ td, th {
 body {
   font-size: 1rem;
   text-decoration: none;
-  color: inherit;
+  color: white;
+  background-color: rgb(31, 31, 31);
 }
 
 h1, h2, h3, h4 {
@@ -79,8 +80,45 @@ a {
 }
 
 /* PAGES */
-body {
-  background-color: rgb(31, 31, 31);
+h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.post {
+  margin: auto;
+  border: 2px solid black;
+  width: 50%;
+  display: flex;
+  height: 100%;
+}
+.post__content {
+  width: 45%;
+  margin: auto;
+  margin-top: 10px;
+}
+.post__img {
+  border: 2px solid black;
+  background: white;
+  width: 185px;
+  margin: 10px 10px;
+}
+.post__title {
+  font-size: 24px;
+}
+.post__date {
+  margin-top: 1rem;
+}
+.post__text {
+  margin-top: 1rem;
+}
+.post__btn {
+  display: flex;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+  color: red;
 }
 
 /*LAYOUT*/

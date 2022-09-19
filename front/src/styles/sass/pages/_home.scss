@@ -1,3 +1,45 @@
-body {
-  background-color: rgb(31, 31, 31);
+h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.post {
+  margin: auto;
+  border: 2px solid black;
+  width: 50%;
+  display: flex;
+  height: 100%;
+
+  &__content {
+    width: 45%;
+    margin: auto;
+    margin-top: 10px;
+  }
+
+  &__img {
+    border: 2px solid black;
+    background: white;
+    width: 185px;
+    margin: 10px 10px;
+  }
+
+  &__title {
+    font-size: 24px;
+  }
+
+  &__date {
+    margin-top: 1rem;
+  }
+
+  &__text {
+    margin-top: 1rem;
+  }
+  &__btn {
+    display: flex;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    justify-content: space-between;
+    color: red;
+  }
 }

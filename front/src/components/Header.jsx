@@ -5,7 +5,9 @@ import logo from "../logo/icon-left-font.svg";
 function Header() {
   return (
     <header class="header">
-      <img className="header__logo" src={logo} alt="" />
+      <a href="http://localhost:3000/">
+        <img className="header__logo" src={logo} alt="groupomania logo" />
+      </a>
       <nav class="header__nav">
         <ul>
           <li>
