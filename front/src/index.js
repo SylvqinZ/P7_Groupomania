@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Create from "./pages/Create";
 import Signup from "./pages/Signup";
-import Signin from "./pages/Signin";
+import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -18,10 +18,10 @@ ReactDOM.render(
     <Router>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/Home" element={<Home />} />
         <Route path="/Create" element={<Create />} />
         <Route path="/Signup" element={<Signup />} />
-        <Route path="/Signin" element={<Signin />} />
+        <Route path="/Login" element={<Login />} />
         <Route path="/Logout" element={<Logout />} />
       </Routes>
     </Router>

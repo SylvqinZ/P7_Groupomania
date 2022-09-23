@@ -8,7 +8,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 
 const mongoose = require("mongoose");
 mongoose
-  .connect(`${process.env.DB_CONNECT}`, {
+  .connect(`mongodb+srv://sylvain:K8YcjvRt4JFsxJHN@cluster0.lpwetdy.mongodb.net/?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

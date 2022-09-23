@@ -1,21 +1,47 @@
 .header {
   padding: 16px;
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   align-items: center;
-  background-color: rgb(0, 0, 0);
+  transition: 0.5s;
   height: 70px;
-  
+  position: fixed;
+  width: 100%;
+  top: 0;
+  border-bottom: 1px solid #d5d2d2;
 
-  &__logo{
-    width: 250px;
-  
+  &__img {
     
-  }
-  &__nav ul {
-    display: inline-flex;
-    margin: 1rem;
     
+    
+   
   }
+  &__logo {
+   
   
+  }
+}
+img {
+  width: 250px;
+
+  
+}
+
+.nav {
+  display: inline-flex;
+}
+.nav ul {
+  display: inline-flex;
+  height: 2rem;
+  border-radius: 3rem;
+  padding: 1rem;
+  align-items: center;
+  margin: auto 5px;
+}
+.nav ul:hover {
+  background-color: #0f14191a;
+}
+
+nav a.active {
+  font-weight: bold;
 }

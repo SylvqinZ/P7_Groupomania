@@ -1,10 +1,10 @@
 
 import "../styles/css/style.css";
-import logo from "../logo/icon-left-font-monochrome-white.svg";
+import logo from "../logo/icon-left-font-monochrome-black.svg";
 
 function Footer() {
   return (
-    <footer class="footer">
+    <footer className="footer">
       <img className="footer__logo" src={logo} alt="groupomania logo" />
       <p>© 2022</p>
     </footer>

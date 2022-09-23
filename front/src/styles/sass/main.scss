@@ -2,8 +2,10 @@
 @import "./base/reset", "./base/typography" ;
 
 /* PAGES */
-@import "./pages/home";
+@import "./pages/home","./pages/create","./pages/login","./pages/signup","./pages/logout";
 
+/* COMPONENTS */
+@import "./components/post";
 
 /*LAYOUT*/
 @import "./layout/header", "./layout/footer";

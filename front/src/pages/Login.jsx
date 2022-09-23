@@ -1,7 +1,7 @@
-function signup() {
+function login() {
   return (
     <main>
-      <h1>S'inscrire</h1>
+      <h1>Se connecter</h1>
       <form className="form">
         <div class="form__group">
           <label for="email">Email</label>
@@ -28,7 +28,7 @@ function signup() {
         </div>
       </form>
     </main>
-  )
+  );
 }
 
-export default signup
+export default login;
