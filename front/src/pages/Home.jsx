@@ -3,7 +3,8 @@ import Post from "../components/Post";
 function Home() {
   return (
     <main>
-      <h1>HOME</h1>
+      <h1>Accueil</h1>
+      
 
       <section className="posts">
         <Post></Post>

@@ -2,6 +2,7 @@ function signup() {
   return (
     <main>
       <h1>S'inscrire</h1>
+      <div className="container">
       <form className="form">
         <div class="form__group">
           <label for="email">Email</label>
@@ -22,11 +23,13 @@ function signup() {
           />
         </div>
         <div className="form__btn">
-          <button className="btn" mat-raised-button color="primary">
-            Login
+          <button className="btn" type="submit" mat-raised-button color="primary">
+            S'inscrire
           </button>
         </div>
       </form>
+      </div>
+      
     </main>
   )
 }

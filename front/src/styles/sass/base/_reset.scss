@@ -73,11 +73,6 @@ body {
   background-color: #e8e6e3e6;
 }
 
-main {
-  width: 600px;
-  margin: auto;
-}
-
 h1,
 h2,
 h3,
@@ -108,4 +103,14 @@ li {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+main {
+  width: 100%;
+
+  padding-top: 100px;
+}
+
+.container {
+  padding: 0 1rem 0 1.5rem;
 }

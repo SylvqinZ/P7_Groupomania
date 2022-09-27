@@ -1,8 +1,10 @@
 function logout() {
   return (
-    <div>
+   <main>
       <h1>LOGOUT</h1>
-    </div>
+   </main>
+      
+    
   )
 }
 

@@ -1,13 +1,16 @@
 .form {
-  margin-top: 150px;
-  margin-bottom: 700px;
+  margin-top: 50px;
+  margin: auto;
   display: flex;
   flex-direction: column;
   border-radius: 1rem;
   justify-content: center;
   background-color: rgb(255, 255, 255);
   height: 255px;
-  width: 600px;
+  border: 1px solid #d5d2d2;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 345px;
 
   &__group {
     margin: auto ;
@@ -32,8 +35,8 @@
     background-color: #0f14191a;
     border-radius: 1rem;
     border: none;
-    height: 30px;
-    width: 10%;
+    height: 35px;
+    width: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
