@@ -161,10 +161,10 @@ h1 {
   margin-top: 5px;
   width: 96%;
   outline: none;
+  border: 1px solid black;
   border-top: hidden;
   border-left: hidden;
   border-right: hidden;
-  border-width: 1px;
   padding: 10px 0px;
   height: 150px;
 }
@@ -201,7 +201,7 @@ h1 {
   justify-content: space-between;
   align-items: center;
   height: 250px;
-  margin-bottom: -85PX;
+  margin-bottom: -85px;
 }
 
 input {
@@ -312,6 +312,9 @@ input#file-input {
 .post:hover {
   background-color: rgba(255, 255, 255, 0.5607843137);
 }
+.post a {
+  cursor: pointer;
+}
 .post__content {
   width: 80%;
   margin: auto;
@@ -323,7 +326,7 @@ input#file-input {
   border-radius: 3rem;
   background: rgb(36, 36, 36);
   height: 80px;
-  width: 80px;
+  width: 85px;
   margin: 20px;
 }
 .post__img {
@@ -372,6 +375,7 @@ img {
   display: inline-flex;
 }
 .nav ul {
+  text-decoration: none;
   display: inline-flex;
   height: 2rem;
   border-radius: 3rem;
@@ -381,6 +385,12 @@ img {
 }
 .nav ul:hover {
   background-color: rgba(15, 20, 25, 0.1019607843);
+}
+.nav button {
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 nav a.active {

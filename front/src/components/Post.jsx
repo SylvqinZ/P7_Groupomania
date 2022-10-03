@@ -1,16 +1,17 @@
 import "../styles/css/style.css";
 
+
 function Post() {
   return (
     <div className="container">
-      <div id="post-id" className="post">
+      <div id="post-897623" className="post">
         <div className="post__avatar"></div>
         <div className="post__content">
           <div className="post__title">
             <b>Post Title</b>
           </div>
           <div className="post__date">
-            <p>2022.09.19 // @User</p>
+            <p>@User - 2022.09.19 13:22:31 </p>
           </div>
           <div className="post__text">
             <p>
@@ -23,13 +24,13 @@ function Post() {
             </p>
             <div className="post__img"></div>
             <div className="post__btn">
-              <p>Like</p>
+              <a>J'aime (x)</a>
 
-              <p>Dislike</p>
+              <a>Je n'aime pas (x)</a>
 
-              <p>Update</p>
+              <a>Modifier</a>
 
-              <p>Delete</p>
+              <a>Supprimer</a>
             </div>
           </div>
         </div>

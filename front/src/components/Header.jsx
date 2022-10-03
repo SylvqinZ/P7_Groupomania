@@ -50,7 +50,7 @@ function Header() {
           <div id="btn" className="nav__logout">
             <ul>
               <li>
-                <NavLink to="/logout">Déconnexion</NavLink>
+                <button>Déconnexion</button>
               </li>
             </ul>
           </div>
@@ -61,7 +61,7 @@ function Header() {
 }
 
 window.onscroll = function () {
-  if (document.documentElement.scrollTop > 80) {
+  if (document.documentElement.scrollTop > 10) {
     document.getElementById("header").style.background = "white";
     document.getElementById("header").style.opacity = "1";
   } else {

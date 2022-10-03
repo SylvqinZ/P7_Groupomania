@@ -24,28 +24,27 @@
     margin-top: 5px;
     width: 96%;
     outline: none;
+    border: 1px solid black;
     border-top: hidden;
     border-left: hidden;
     border-right: hidden;
-    border-width: 1px;
     padding: 10px 0px;
     height: 150px;
   }
+  
   &__image {
-    
     display: flex;
     align-items: center;
     justify-content: center;
     margin: auto;
     border-radius: 1rem;
     margin: 0 10px;
-    margin-top:20px;
+    margin-top: 20px;
     margin-bottom: -90px;
   }
   & img {
     border-radius: 1rem;
     width: 95%;
-    
   }
 
   &__btn {
@@ -55,8 +54,6 @@
     margin-top: 10px;
     width: 80%;
   }
-
-  
 
   &__label {
     width: 30px;
@@ -70,7 +67,7 @@
     justify-content: space-between;
     align-items: center;
     height: 250px;
-    margin-bottom: -85PX;
+    margin-bottom: -85px;
   }
 }
 
@@ -114,4 +111,3 @@ input#file-input {
   height: 20px;
   width: 150px;
 }
-

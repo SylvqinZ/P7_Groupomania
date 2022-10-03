@@ -16,6 +16,9 @@
     background-color: #ffffff8f;
   }
 
+  & a {
+    cursor: pointer;
+  }
   &__content {
     width: 80%;
     margin: auto;
@@ -28,7 +31,7 @@
     border-radius: 3rem;
     background: rgb(36, 36, 36);
     height: 80px;
-    width: 80px;
+    width: 85px;
     margin: 20px;
   }
 

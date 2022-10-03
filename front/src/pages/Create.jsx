@@ -37,7 +37,7 @@ export default function Create() {
         
 
         <div className="create__footer">
-          <label className="create__label" For="file-input">
+          <label className="create__label" htmlFor="file-input">
             <span>
               <i id="icon" className="fas fa-image"></i>
             </span>

@@ -4,31 +4,26 @@ function login() {
       <h1>Se connecter</h1>
       <div className="container">
         <form className="form">
-          <div class="form__group">
-            <label for="email">Email</label>
+          <div className="form__group">
+            <label htmlFor="email">Email</label>
             <input
               type="email"
-              class="form__email"
+              className="form__email"
               id="email"
-              formControlName="email"
+              formcontrolname="email"
             />
           </div>
-          <div class="form__group">
-            <label for="password">Password</label>
+          <div className="form__group">
+            <label htmlFor="password">Password</label>
             <input
               type="password"
-              class="form__password"
+              className="form__password"
               id="password"
-              formControlName="password"
+              formcontrolname="password"
             />
           </div>
           <div className="form__btn">
-            <button
-              className="btn"
-              type="submit"
-              mat-raised-button
-              color="primary"
-            >
+            <button className="btn" type="submit" color="primary">
               Se Connecter
             </button>
           </div>
