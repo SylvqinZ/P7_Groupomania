@@ -79,8 +79,11 @@ th {
 body {
   font-size: 1rem;
   text-decoration: none;
+  padding-bottom: 6rem;
   color: rgb(0, 0, 0);
   background-color: rgba(232, 230, 227, 0.9019607843);
+  margin: 0;
+  position: relative;
 }
 
 h1,
@@ -312,6 +315,9 @@ input#file-input {
 .post:hover {
   background-color: rgba(255, 255, 255, 0.5607843137);
 }
+.post h2 {
+  margin: 0;
+}
 .post a {
   cursor: pointer;
 }
@@ -329,20 +335,37 @@ input#file-input {
   width: 85px;
   margin: 20px;
 }
-.post__img {
-  border: 1px solid rgb(35, 34, 34);
-  border-radius: 1rem;
-  height: 200px;
+.post__image {
   margin: 20px 20px 0 0;
+}
+.post img {
+  margin: auto;
+  object-fit: cover;
+  border-radius: 1rem;
+  width: 100%;
 }
 .post__title {
   font-size: 24px;
+  margin-top: 5px;
+}
+.post__info {
+  display: flex;
+  color: rgba(0, 0, 0, 0.7333333333);
+  align-items: center;
+  font-style: italic;
+}
+.post__user {
+  font-size: 14px;
 }
 .post__date {
-  margin-top: 1rem;
+  margin-left: 3px;
+  font-size: 13px;
 }
 .post__text {
   margin-top: 1rem;
+  width: 95%;
+  overflow: hidden;
+  word-wrap: break-word;
 }
 .post__btn {
   display: flex;
@@ -469,6 +492,8 @@ nav a.active {
   justify-content: center;
   align-items: center;
   margin-bottom: -150px;
+  position: absolute;
+  bottom: 0;
 }
 .footer__logo {
   height: 1rem;
