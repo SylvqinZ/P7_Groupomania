@@ -20,7 +20,7 @@ const Create = () => {
       body: JSON.stringify(body)
     })
     .then(() => {
-      console.log("post créer");
+      console.log("post créé");
     })
     
 

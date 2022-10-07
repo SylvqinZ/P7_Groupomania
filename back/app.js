@@ -6,6 +6,7 @@ require("dotenv").config();
 const path = require("path");
 const mongoSanitize = require("express-mongo-sanitize");
 
+
 const mongoose = require("mongoose");
 mongoose
   .connect(`${process.env.DB_CONNECT}`, {
@@ -32,7 +33,6 @@ const limiter = rateLimit({
 
 // Apply the rate limiting middleware to all requests
 app.use(limiter);
-
 app.use(express.json());
 app.use(mongoSanitize());
 

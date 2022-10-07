@@ -2,15 +2,13 @@ const Post = require("../models/post");
 const fs = require("fs");
 
 exports.createPost = (req, res, next) => {
-  const postData = JSON.parse(req.body.post);
-  delete postData._id;
-  delete postData._userId;
+  console.log(req.body);
+  const postData = req.body;
+
   const post = new Post({
     ...postData,
-    userId: req.auth.userId,
-    imageUrl: `${req.protocol}://${req.get("host")}/images/${
-      req.file.filename
-    }`,
+
+    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file}`,
   });
   post
     .save()
@@ -18,7 +16,7 @@ exports.createPost = (req, res, next) => {
       res.status(201).json({ message: "Objet enregistré !" });
     })
     .catch((error) => {
-      res.status(400).json({ error });
+      res.status(400).json({ error: "une erreur est survenu" });
     });
 };
 
@@ -49,16 +47,11 @@ exports.updatePost = (req, res, next) => {
 
           postObject = {
             ...JSON.parse(req.body.post),
-            imageUrl: `${req.protocol}://${req.get("host")}/images/${
-              req.file.filename
-            }`,
+            imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
           };
         }
 
-        Post.updateOne(
-          { _id: req.params.id },
-          { ...postObject, _id: req.params.id }
-        )
+        Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
           .then(() => {
             res.status(200).json({ message: "Post updated !" });
           })
@@ -66,7 +59,7 @@ exports.updatePost = (req, res, next) => {
       }
     })
     .catch((error) => {
-      res.status(500).json({ error });
+      res.status(500).json({ error: error });
     });
 };
 
@@ -112,10 +105,7 @@ exports.likePost = (req, res) => {
       )
         .then(() => res.status(200).json({ message: "Like added" }))
         .catch((error) => res.status(400).json({ error }));
-    } else if (
-      !post.usersDisliked.includes(req.body.userId) &&
-      req.body.like === -1
-    ) {
+    } else if (!post.usersDisliked.includes(req.body.userId) && req.body.like === -1) {
       Post.updateOne(
         { _id: req.params.id },
         { $inc: { dislikes: 1 }, $push: { usersDisliked: req.body.userId } }
