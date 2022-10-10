@@ -139,6 +139,12 @@ h1 {
   margin-bottom: 50px;
 }
 
+section {
+  margin: auto;
+  width: 100%;
+  max-width: 600px;
+}
+
 .create {
   border-radius: 1rem;
   margin: auto;
@@ -300,17 +306,15 @@ input#file-input {
 /* COMPONENTS */
 .posts {
   margin-bottom: 1rem;
+  padding: 0 1rem 0 1.5rem;
 }
 
 .post {
   border: 1px solid #d5d2d2;
-  width: 100%;
   display: flex;
-  margin: auto;
   margin-bottom: 10px;
   background-color: #ffffff;
   border-radius: 1rem;
-  max-width: 600px;
 }
 .post:hover {
   background-color: rgba(255, 255, 255, 0.5607843137);
@@ -369,10 +373,29 @@ input#file-input {
 }
 .post__btn {
   display: flex;
+  margin-left: 20px;
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
   justify-content: space-between;
-  width: 95%;
+  width: 80%;
+}
+.post__btn #icon {
+  font-size: 1rem;
+  cursor: pointer;
+}
+.post .like, .post .dislike {
+  margin-right: 3px;
+}
+.post .like:hover {
+  color: blue;
+}
+.post .dislike:hover {
+  color: red;
+}
+.post .update:hover {
+  color: rgb(5, 109, 255);
+}
+.post .delete:hover {
   color: red;
 }
 
@@ -388,6 +411,9 @@ input#file-input {
   width: 100%;
   top: 0;
   border-bottom: 1px solid #d5d2d2;
+}
+.header__img {
+  height: 28rem;
 }
 
 img {

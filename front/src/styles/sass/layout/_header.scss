@@ -9,7 +9,12 @@
   width: 100%;
   top: 0;
   border-bottom: 1px solid #d5d2d2;
+
+  &__img {
+    height: 28rem;
+  }
 }
+
 img {
   width: 250px;
 }

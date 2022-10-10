@@ -1,16 +1,16 @@
 .posts {
   margin-bottom: 1rem;
+  padding: 0 1rem 0 1.5rem;
 }
 
 .post {
   border: 1px solid #d5d2d2;
-  width: 100%;
+
   display: flex;
-  margin: auto;
+
   margin-bottom: 10px;
   background-color: #ffffff;
   border-radius: 1rem;
-  max-width: 600px;
 
   &:hover {
     background-color: #ffffff8f;
@@ -79,10 +79,32 @@
 
   &__btn {
     display: flex;
+    margin-left: 20px;
     margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
     justify-content: space-between;
-    width: 95%;
-    color: red;
+    width: 80%;
+    
+  & #icon {
+    font-size: 1rem;
+    cursor: pointer;
   }
+}
+
+.like, .dislike {
+  margin-right: 3px;
+}
+
+.like:hover {
+  color: blue
+}
+.dislike:hover {
+  color: red;
+}
+.update:hover {
+  color: rgb(5, 109, 255);
+}
+.delete:hover {
+  color: red;
+}
 }

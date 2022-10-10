@@ -8,7 +8,7 @@ const Create = () => {
   const navigate = useNavigate();
 
   const onImageChange = (e) => {
-    const [file] = e.target.files
+    const [file] = e.target.files;
     setImage(URL.createObjectURL(file));
   };
 
@@ -33,7 +33,7 @@ const Create = () => {
 
   return (
     <main>
-      <h1>Creér un post</h1>
+      <h1>Modifier</h1>
       <div className="container">
         <form className="create" onSubmit={handleSubmit}>
           <input

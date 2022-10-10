@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Create from "./pages/Create";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import Update from "./pages/Update";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { Navigate } from "react-router-dom";
@@ -23,6 +24,7 @@ root.render(
         <Route path="/Create" element={<Create />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Login" element={<Login />} />
+        <Route path="/Update" element={<Update />} />
       </Routes>
     </Router>
     <Footer />

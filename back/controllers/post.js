@@ -12,12 +12,9 @@ exports.createPost = (req, res, next) => {
   });
   post
     .save()
-    .then(() => {
-      res.status(201).json({ message: "Objet enregistré !" });
-    })
-    .catch((error) => {
-      res.status(400).json({ error: "une erreur est survenu" });
-    });
+    .then(() => res.status(201).json({ message: "Objet enregistré !" }))
+
+    .catch((error) => res.status(400).json({ error: "une erreur est survenu" }));
 };
 
 exports.getOnePost = (req, res, next) => {
@@ -99,26 +96,17 @@ exports.getAllPosts = (req, res, next) => {
 exports.likePost = (req, res) => {
   Post.findOne({ _id: req.params.id }).then((post) => {
     if (!post.usersLiked.includes(req.body.userId) && req.body.like === 1) {
-      Post.updateOne(
-        { _id: req.params.id },
-        { $inc: { likes: 1 }, $push: { usersLiked: req.body.userId } }
-      )
+      Post.updateOne({ _id: req.params.id }, { $inc: { likes: 1 }, $push: { usersLiked: req.body.userId } })
         .then(() => res.status(200).json({ message: "Like added" }))
         .catch((error) => res.status(400).json({ error }));
     } else if (!post.usersDisliked.includes(req.body.userId) && req.body.like === -1) {
-      Post.updateOne(
-        { _id: req.params.id },
-        { $inc: { dislikes: 1 }, $push: { usersDisliked: req.body.userId } }
-      )
+      Post.updateOne({ _id: req.params.id }, { $inc: { dislikes: 1 }, $push: { usersDisliked: req.body.userId } })
         .then(() => res.status(200).json({ message: "Dislike added" }))
         .catch((error) => res.status(400).json({ error }));
     } else {
       Post.findOne({ _id: req.params.id }).then((resultat) => {
         if (resultat.usersLiked.includes(req.body.userId)) {
-          Post.updateOne(
-            { _id: req.params.id },
-            { $inc: { likes: -1 }, $pull: { usersLiked: req.body.userId } }
-          )
+          Post.updateOne({ _id: req.params.id }, { $inc: { likes: -1 }, $pull: { usersLiked: req.body.userId } })
             .then(() => res.status(200).json({ message: "Like removed" }))
             .catch((error) => res.status(400).json({ error }));
         } else if (resultat.usersDisliked.includes(req.body.userId)) {
