@@ -383,14 +383,24 @@ input#file-input {
   font-size: 1rem;
   cursor: pointer;
 }
-.post .like, .post .dislike {
+.post .like,
+.post .dislike {
+  display: flex;
+}
+.post .like__btn,
+.post .dislike__btn {
   margin-right: 3px;
 }
-.post .like:hover {
+.post .like__btn:hover,
+.post .dislike__btn:hover {
   color: blue;
 }
-.post .dislike:hover {
+.post .like__btn:hover,
+.post .dislike__btn:hover {
   color: red;
+}
+.post .fa-thumbs-down {
+  margin-top: 3px;
 }
 .post .update:hover {
   color: rgb(5, 109, 255);

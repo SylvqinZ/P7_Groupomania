@@ -84,27 +84,35 @@
     margin-bottom: 1.2rem;
     justify-content: space-between;
     width: 80%;
-    
-  & #icon {
-    font-size: 1rem;
-    cursor: pointer;
+
+    & #icon {
+      font-size: 1rem;
+      cursor: pointer;
+    }
   }
-}
 
-.like, .dislike {
-  margin-right: 3px;
-}
+  .like,
+  .dislike {
+    display: flex;
 
-.like:hover {
-  color: blue
-}
-.dislike:hover {
-  color: red;
-}
-.update:hover {
-  color: rgb(5, 109, 255);
-}
-.delete:hover {
-  color: red;
-}
+    &__btn {
+      margin-right: 3px;
+    }
+    &__btn:hover {
+      color: blue;
+    }
+    &__btn:hover {
+      color: red;
+    }
+  }
+
+  .fa-thumbs-down {
+    margin-top: 3px;
+  }
+  .update:hover {
+    color: rgb(5, 109, 255);
+  }
+  .delete:hover {
+    color: red;
+  }
 }

@@ -2,19 +2,25 @@ const Post = require("../models/post");
 const fs = require("fs");
 
 exports.createPost = (req, res, next) => {
-  console.log(req.body);
-  const postData = req.body;
-
+  const postData = JSON.parse(req.body.post);
+  //const postData = req.body.post;
+  delete postData._id;
+  delete postData._userId;
   const post = new Post({
     ...postData,
-
-    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file}`,
+    //userId: req.auth.userId,
+    imageUrl: `${req.protocol}://${req.get("host")}/images/${
+      req.file.filename
+    }`,
   });
   post
     .save()
-    .then(() => res.status(201).json({ message: "Objet enregistré !" }))
-
-    .catch((error) => res.status(400).json({ error: "une erreur est survenu" }));
+    .then(() => {
+      res.status(201).json({ message: "Objet enregistré !" });
+    })
+    .catch((error) => {
+      res.status(400).json({ error });
+    });
 };
 
 exports.getOnePost = (req, res, next) => {

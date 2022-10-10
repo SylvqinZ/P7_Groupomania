@@ -3,25 +3,32 @@ import { useNavigate } from "react-router-dom";
 
 const Create = () => {
   const [image, setImage] = useState("");
+  const [previewImage, setPreviewImage] = useState("");
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const navigate = useNavigate();
 
   const onImageChange = (e) => {
     const [file] = e.target.files
-    setImage(URL.createObjectURL(file));
+    setImage(file);
+    setPreviewImage(URL.createObjectURL(file));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const post = { title, text, image };
-    console.log(post);
+    let formData = new FormData();
+    formData.append('post', JSON.stringify({
+    	title: title,
+    	text: text
+    }));
+    formData.append('image', image);
+
     fetch("http://localhost:3000/api/posts", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(post),
+  		body: formData
     })
-      .then(() => {
+      .then((data) => {
+        console.log(data);
         console.log("post créé");
         navigate("/home");
       })
@@ -59,7 +66,7 @@ const Create = () => {
               accept="image/png, image/jpeg"
               onChange={onImageChange}
             />
-            <img src={image} alt="" />
+            <img src={previewImage} alt="" />
           </div>
 
           <div className="create__footer">
