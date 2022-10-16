@@ -9,14 +9,12 @@ exports.createPost = (req, res, next) => {
   const post = new Post({
     ...postData,
     //userId: req.auth.userId,
-    imageUrl: `${req.protocol}://${req.get("host")}/images/${
-      req.file.filename
-    }`,
+    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
   });
   post
     .save()
     .then(() => {
-      res.status(201).json({ message: "Objet enregistré !" });
+      res.status(201).json({ message: "Post créé !" });
     })
     .catch((error) => {
       res.status(400).json({ error });
@@ -37,11 +35,12 @@ exports.getOnePost = (req, res, next) => {
     });
 };
 
+     
 exports.updatePost = (req, res, next) => {
   let postObject = { ...req.body };
   Post.findOne({ _id: req.params.id })
     .then((post) => {
-      if (post.userId != req.auth.userId) {
+      if (!post) {
         res.status(403).json({ message: "Not authorized" });
       } else {
         if (req.file) {
@@ -63,27 +62,29 @@ exports.updatePost = (req, res, next) => {
     })
     .catch((error) => {
       res.status(500).json({ error: error });
+      console.log(filename);
     });
 };
 
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id })
     .then((post) => {
-      if (post.userId != req.auth.userId) {
+      if (!post /*.userId != req.auth.userId*/) {
         res.status(401).json({ message: "Not authorized" });
       } else {
         const filename = post.imageUrl.split("/images/")[1];
         fs.unlink(`images/${filename}`, () => {
           Post.deleteOne({ _id: req.params.id })
             .then(() => {
-              res.status(200).json({ message: "Objet supprimé !" });
+              res.status(200).json({ message: "Post supprimé !" });
             })
             .catch((error) => res.status(401).json({ error }));
         });
       }
     })
     .catch((error) => {
-      res.status(500).json({ error });
+      const message = `The post couldn't be deleted, please try again`;
+      res.status(500).json({ message, data: error });
     });
 };
 

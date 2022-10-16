@@ -383,19 +383,21 @@ input#file-input {
   font-size: 1rem;
   cursor: pointer;
 }
-.post .like,
+.post .like {
+  display: flex;
+}
+.post .like__btn {
+  margin-right: 3px;
+}
+.post .like__btn:hover {
+  color: blue;
+}
 .post .dislike {
   display: flex;
 }
-.post .like__btn,
 .post .dislike__btn {
   margin-right: 3px;
 }
-.post .like__btn:hover,
-.post .dislike__btn:hover {
-  color: blue;
-}
-.post .like__btn:hover,
 .post .dislike__btn:hover {
   color: red;
 }
@@ -423,7 +425,7 @@ input#file-input {
   border-bottom: 1px solid #d5d2d2;
 }
 .header__img {
-  height: 28rem;
+  margin-top: 3px;
 }
 
 img {

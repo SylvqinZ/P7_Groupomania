@@ -1,41 +1,24 @@
 import Post from "../components/Post";
-import axios from "axios";
-import logo from "../logo/15.png";
+
 import React, { useEffect, useState } from "react";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-
-
-		fetch(`http://localhost:3000/api/posts`)
-		.then((res) => {
-			if(res.ok) {
-				return res.json();
-			}
-		})
-		.then((data) => {
-			console.log(data);
-			setPosts(data);
-		})
-		.catch((err) => {
-			console.log(err);
-		});
-
-		/*
-    axios
-    .get("http://localhost:3000/api/posts")
-    .then((res) => {
-      console.log(res);
-      setPosts(res.data);
-    })
-    .catch((err) => {
-      console.log("error");
-      console.log(err);
-    });
-		*/
-
+    fetch(`http://localhost:3000/api/posts`, {})
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        setPosts(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (

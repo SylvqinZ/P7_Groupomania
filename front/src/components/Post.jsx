@@ -1,8 +1,21 @@
 import "../styles/css/style.css";
 import { NavLink } from "react-router-dom";
 
-function Post(props) {
-  
+const Post = (props) => {
+  const handleDelete = () => {
+    fetch(`http://localhost:3000/api/posts/${props.id}`, {
+      method: "DELETE",
+    })
+      .then((data) => {
+        window.confirm("voulez-vous supprimer votre publication?");
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err.message);
+        console.error("There was an error!", err);
+      });
+  };
+
   return (
     <article id={props.id} className="post">
       <div className="post__avatar"></div>
@@ -33,7 +46,6 @@ function Post(props) {
               <i id="icon" className="fas fa-thumbs-up"></i>
             </span>
             <div className="like__counter">(x)</div>
-            
           </div>
 
           <div className="dislike">
@@ -43,19 +55,19 @@ function Post(props) {
             <div className="dislike__counter">(x)</div>
           </div>
 
-          <NavLink to="/update">
+          <NavLink to={`/update/${props.id}`}>
             <span className="update">
               <i id="icon" className=" fas fa-pen"></i>
             </span>
           </NavLink>
 
-          <span className="delete">
+          <span className="delete" onClick={() => handleDelete()}>
             <i id="icon" className="fas fa-trash"></i>
           </span>
         </div>
       </div>
     </article>
   );
-}
+};
 
 export default Post;

@@ -1,32 +1,58 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const Create = () => {
-  const [image, setImage] = useState("");
+const Update = () => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const navigate = useNavigate();
+  const [image, setImage] = useState("");
+  const [previewImage, setPreviewImage] = useState("");
+  const [post, setPost] = useState([]);
+  const { id } = useParams();
 
-  const onImageChange = (e) => {
+  /*const onImageChange = (e) => {
     const [file] = e.target.files;
-    setImage(URL.createObjectURL(file));
+    setImage(file);
+    setPreviewImage(URL.createObjectURL(file));
   };
+  */
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const post = { title, text, image };
-    console.log(post);
-    fetch("http://localhost:3000/api/posts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(post),
-    })
-      .then(() => {
-        console.log("post créé");
-        navigate("/home");
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/posts/` + id)
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        setPost(data);
       })
       .catch((err) => {
-        console.log("error");
+        console.log(err);
+      });
+  }, []);
+
+  const handleEdit = () => {
+    let formData = new FormData();
+    formData.append("text", text);
+    formData.append("title", title);
+
+    formData.append("selectedFile", selectedFile);
+    console.log(formData);
+    axios
+      .put("http://localhost:3000/api/posts/" + id, formData, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((data) => {
+        console.log(data);
+        console.log("balba");
+      })
+      .catch((err) => {
         console.log(err);
       });
   };
@@ -35,19 +61,21 @@ const Create = () => {
     <main>
       <h1>Modifier</h1>
       <div className="container">
-        <form className="create" onSubmit={handleSubmit}>
+        <form className="create" onSubmit={handleEdit}>
           <input
             className="create__title"
             placeholder="Votre Titre"
+            name="title"
             type="text"
-            value={title}
+            defaultValue={post.title}
             onChange={(e) => setTitle(e.target.value)}
           />
           <textarea
             className="create__text"
             placeholder="Quoi de neuf ?"
             type="text"
-            value={text}
+            name="text"
+            defaultValue={post.text}
             onChange={(e) => setText(e.target.value)}
           />
 
@@ -55,11 +83,11 @@ const Create = () => {
             <input
               id="file-input"
               className="image-input"
+              name="file"
               type="file"
-              accept="image/png, image/jpeg"
-              onChange={onImageChange}
+              onChange={(e) => setImage(e.target.files[0])}
             />
-            <img src={image} alt="" />
+            <img src={post.imageUrl} alt="" />
           </div>
 
           <div className="create__footer">
@@ -71,7 +99,7 @@ const Create = () => {
 
             <div className="create__btn">
               <button className="btn" type="submit">
-                Publier
+                Modifier
               </button>
             </div>
           </div>
@@ -81,4 +109,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default Update;

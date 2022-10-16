@@ -9,7 +9,7 @@ const Create = () => {
   const navigate = useNavigate();
 
   const onImageChange = (e) => {
-    const [file] = e.target.files
+    const [file] = e.target.files;
     setImage(file);
     setPreviewImage(URL.createObjectURL(file));
   };
@@ -17,20 +17,23 @@ const Create = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     let formData = new FormData();
-    formData.append('post', JSON.stringify({
-    	title: title,
-    	text: text
-    }));
-    formData.append('image', image);
+    formData.append(
+      "post",
+      JSON.stringify({
+        title: title,
+        text: text,
+      })
+    );
+    formData.append("image", image);
 
     fetch("http://localhost:3000/api/posts", {
       method: "POST",
-  		body: formData
+      body: formData,
     })
       .then((data) => {
         console.log(data);
-        console.log("post créé");
         navigate("/home");
+        console.log("post créé");
       })
       .catch((err) => {
         console.log("error");
