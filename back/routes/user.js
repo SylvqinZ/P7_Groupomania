@@ -5,7 +5,7 @@ const validator = require("../middleware/email");
 
 const userCtrl = require('../controllers/user');
 
-router.post('/signup', validator, password, userCtrl.signup);
+router.post('/signup', /*validator, password,*/ userCtrl.signup);
 router.post('/login', userCtrl.login);
 
 module.exports = router;

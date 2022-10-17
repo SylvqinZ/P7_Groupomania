@@ -35,7 +35,6 @@ exports.getOnePost = (req, res, next) => {
     });
 };
 
-     
 exports.updatePost = (req, res, next) => {
   let postObject = { ...req.body };
   Post.findOne({ _id: req.params.id })
@@ -48,7 +47,7 @@ exports.updatePost = (req, res, next) => {
           fs.unlink(`images/${filename}`, () => {});
 
           postObject = {
-            ...JSON.parse(req.body.post),
+            ...req.body,
             imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
           };
         }

@@ -11,12 +11,11 @@ const Update = () => {
   const [post, setPost] = useState([]);
   const { id } = useParams();
 
-  /*const onImageChange = (e) => {
+  const onImageChange = (e) => {
     const [file] = e.target.files;
     setImage(file);
     setPreviewImage(URL.createObjectURL(file));
   };
-  */
 
   useEffect(() => {
     fetch(`http://localhost:3000/api/posts/` + id)
@@ -34,23 +33,18 @@ const Update = () => {
       });
   }, []);
 
-  const handleEdit = () => {
+  const handleEdit = (e) => {
+    e.preventDefault();
     let formData = new FormData();
-    formData.append("text", text);
     formData.append("title", title);
+    formData.append("text", text);
+    formData.append("image", image);
 
-    formData.append("selectedFile", selectedFile);
-    console.log(formData);
     axios
-      .put("http://localhost:3000/api/posts/" + id, formData, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((data) => {
-        console.log(data);
-        console.log("balba");
+      .put("http://localhost:3000/api/posts/" + id, formData)
+      .then((res) => {
+        console.log(res);
+        navigate("/home");
       })
       .catch((err) => {
         console.log(err);
@@ -70,6 +64,7 @@ const Update = () => {
             defaultValue={post.title}
             onChange={(e) => setTitle(e.target.value)}
           />
+
           <textarea
             className="create__text"
             placeholder="Quoi de neuf ?"
@@ -80,14 +75,8 @@ const Update = () => {
           />
 
           <div className="create__image">
-            <input
-              id="file-input"
-              className="image-input"
-              name="file"
-              type="file"
-              onChange={(e) => setImage(e.target.files[0])}
-            />
-            <img src={post.imageUrl} alt="" />
+            <input id="file-input" className="image-input" name="file" type="file" onChange={onImageChange} />
+            <img src={previewImage} alt="" />
           </div>
 
           <div className="create__footer">

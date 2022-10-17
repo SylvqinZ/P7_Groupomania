@@ -1,5 +1,6 @@
 import "../styles/css/style.css";
 import { NavLink } from "react-router-dom";
+import avatar from "../logo/Default_pfp.svg.png"
 
 const Post = (props) => {
   const handleDelete = () => {
@@ -18,7 +19,9 @@ const Post = (props) => {
 
   return (
     <article id={props.id} className="post">
-      <div className="post__avatar"></div>
+      <div className="post__avatar">
+        <img id="avatar" src={avatar} alt="" />
+      </div>
       <div className="post__content">
         <div className="post__title">
           <h2> {props.title}</h2>
