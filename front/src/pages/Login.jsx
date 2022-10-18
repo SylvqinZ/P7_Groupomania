@@ -14,8 +14,10 @@ const SignupLogin = () => {
         password: password,
       })
       .then((res) => {
-        console.log(res);
-        navigate("/home")
+        localStorage.setItem("id", res.data.userId);
+        localStorage.setItem("username", res.data.username);
+        
+        navigate("/home");
       })
       .catch((err) => {
         console.log("error");
@@ -36,7 +38,7 @@ const SignupLogin = () => {
     <main>
       <h1>Se connecter</h1>
       <div className="container">
-        <form className="login-form" onSubmit={(() => login, () => emailValidator(email))}>
+        <form className="login-form" onClick={(() => login, () => emailValidator(email))}>
           <div className="login-form__group">
             <label htmlFor="email">E-mail</label>
             <input

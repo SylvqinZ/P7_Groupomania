@@ -3,13 +3,33 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Update = () => {
-  const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
   const navigate = useNavigate();
-  const [image, setImage] = useState("");
-  const [previewImage, setPreviewImage] = useState("");
+  const [previewImage, setPreviewImage] = useState([]);
   const [post, setPost] = useState([]);
   const { id } = useParams();
+
+  /*function setTitle(title) {
+    post.title = title;
+    setPost(post);
+  }
+  function setText(text) {
+    post.text = text;
+    setPost(post);
+  }
+  function setImage(imageUrl) {
+    post.imageUrl = imageUrl;
+    setPost(post);
+  }
+  */
+  function setTitle(newTitle) {
+    setPost({ ...post, title: newTitle });
+  }
+  function setText(newText) {
+    setPost({ ...post, text: newText });
+  }
+  function setImage(newImage) {
+    setPost({ ...post, imageUrl: newImage });
+  }
 
   const onImageChange = (e) => {
     const [file] = e.target.files;
@@ -18,15 +38,11 @@ const Update = () => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/posts/` + id)
+    axios
+      .get(`http://localhost:3000/api/posts/${id}`)
       .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        setPost(data);
+        setPost(res.data);
+        setPreviewImage(res.data.imageUrl);
       })
       .catch((err) => {
         console.log(err);
@@ -36,9 +52,9 @@ const Update = () => {
   const handleEdit = (e) => {
     e.preventDefault();
     let formData = new FormData();
-    formData.append("title", title);
-    formData.append("text", text);
-    formData.append("image", image);
+    formData.append("title", post.title);
+    formData.append("text", post.text);
+    formData.append("image", post.imageUrl);
 
     axios
       .put("http://localhost:3000/api/posts/" + id, formData)
@@ -61,7 +77,7 @@ const Update = () => {
             placeholder="Votre Titre"
             name="title"
             type="text"
-            defaultValue={post.title}
+            value={post.title}
             onChange={(e) => setTitle(e.target.value)}
           />
 
@@ -70,7 +86,7 @@ const Update = () => {
             placeholder="Quoi de neuf ?"
             type="text"
             name="text"
-            defaultValue={post.text}
+            value={post.text}
             onChange={(e) => setText(e.target.value)}
           />
 

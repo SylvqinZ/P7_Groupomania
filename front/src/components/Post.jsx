@@ -1,19 +1,18 @@
 import "../styles/css/style.css";
 import { NavLink } from "react-router-dom";
-import avatar from "../logo/Default_pfp.svg.png"
+import axios from "axios";
+import avatar from "../logo/Default_pfp.svg.png";
 
 const Post = (props) => {
   const handleDelete = () => {
-    fetch(`http://localhost:3000/api/posts/${props.id}`, {
-      method: "DELETE",
-    })
-      .then((data) => {
+    axios
+      .delete(`http://localhost:3000/api/posts/${props.id}`)
+      .then((res) => {
         window.confirm("voulez-vous supprimer votre publication?");
         window.location.reload();
       })
       .catch((err) => {
-        console.log(err.message);
-        console.error("There was an error!", err);
+        console.log(err);
       });
   };
 
@@ -28,7 +27,7 @@ const Post = (props) => {
         </div>
         <div className="post__info">
           <div className="post__user">
-            <p> {props.userName} -</p>
+            <p> @{props.username} -</p>
           </div>
           <div className="post__date">
             <p> {props.date} </p>

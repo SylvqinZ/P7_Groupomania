@@ -3,6 +3,15 @@ import "../styles/css/style.css";
 import logo from "../logo/icon-left-font1.png";
 
 function Header() {
+  window.onscroll = function () {
+    if (document.documentElement.scrollTop > 10) {
+      document.getElementById("header").style.background = "white";
+      document.getElementById("header").style.opacity = "1";
+    } else {
+      document.getElementById("header").style.background = "none";
+      document.getElementById("header").style.color = "black";
+    }
+  };
   return (
     <header id="header" className="header">
       <div className="header__img">
@@ -59,17 +68,5 @@ function Header() {
     </header>
   );
 }
-
-window.onscroll = function () {
-  if (document.documentElement.scrollTop > 10) {
-    document.getElementById("header").style.background = "white";
-    document.getElementById("header").style.opacity = "1";
-  } else {
-    document.getElementById("header").style.background = "none";
-    document.getElementById("header").style.color = "black";
-  }
-};
-
-
 
 export default Header;

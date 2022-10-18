@@ -1,20 +1,16 @@
 import Post from "../components/Post";
-
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
+  
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/posts`, {})
+    axios
+      .get(`http://localhost:3000/api/posts`)
       .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        setPosts(data);
+        setPosts(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -32,7 +28,7 @@ const Home = () => {
             title={post.title}
             text={post.text}
             image={post.imageUrl}
-            userName="@moi"
+            username={post.username}
             date="2022.09.19, 13:22:31"
             avatar=""
           />

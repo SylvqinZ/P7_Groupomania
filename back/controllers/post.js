@@ -2,7 +2,7 @@ const Post = require("../models/post");
 const fs = require("fs");
 
 exports.createPost = (req, res, next) => {
-  const postData = JSON.parse(req.body.post);
+  const postData = req.body;
   //const postData = req.body.post;
   delete postData._id;
   delete postData._userId;

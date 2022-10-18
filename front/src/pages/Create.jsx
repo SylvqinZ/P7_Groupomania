@@ -1,12 +1,25 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Create = () => {
-  const [image, setImage] = useState("");
-  const [previewImage, setPreviewImage] = useState("");
-  const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
+  const [previewImage, setPreviewImage] = useState([]);
+  const [post, setPost] = useState([]);
   const navigate = useNavigate();
+
+
+  function setTitle(title) {
+    post.title = title;
+    setPost(post);
+  }
+  function setText(text) {
+    post.text = text;
+    setPost(post);
+  }
+  function setImage(imageUrl) {
+    post.imageUrl = imageUrl;
+    setPost(post);
+  }
 
   const onImageChange = (e) => {
     const [file] = e.target.files;
@@ -16,27 +29,18 @@ const Create = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let formData = new FormData();
-    formData.append(
-      "post",
-      JSON.stringify({
-        title: title,
-        text: text,
-      })
-    );
-    formData.append("image", image);
 
-    fetch("http://localhost:3000/api/posts", {
-      method: "POST",
-      body: formData,
-    })
-      .then((data) => {
-        console.log(data);
+    let formData = new FormData();
+    formData.append("title", post.title);
+    formData.append("text", post.text);
+    formData.append("image", post.imageUrl);
+    //formData.append("username", username);
+    axios
+      .post(`http://localhost:3000/api/posts`, formData)
+      .then((res) => {
         navigate("/home");
-        console.log("post créé");
       })
       .catch((err) => {
-        console.log("error");
         console.log(err);
       });
   };
@@ -50,14 +54,14 @@ const Create = () => {
             className="create__title"
             placeholder="Votre Titre"
             type="text"
-            value={title}
+            value={post.title}
             onChange={(e) => setTitle(e.target.value)}
           />
           <textarea
             className="create__text"
             placeholder="Quoi de neuf ?"
             type="text"
-            value={text}
+            value={post.text}
             onChange={(e) => setText(e.target.value)}
           />
 

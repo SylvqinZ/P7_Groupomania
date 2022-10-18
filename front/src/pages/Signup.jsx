@@ -34,7 +34,7 @@ const SignupForm = () => {
     <main>
       <h1>S'inscrire</h1>
       <div className="container">
-        <form className="signup-form" onSubmit={(() => signup, () => emailValidator(email))}>
+        <form className="signup-form" onClick={(() => signup, () => emailValidator(email))}>
           <div className="signup-form__group">
             <label className="signup-form_username" htmlFor="name">
               Nom
