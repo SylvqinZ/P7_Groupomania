@@ -12,6 +12,12 @@ function Header() {
       document.getElementById("header").style.color = "black";
     }
   };
+
+
+  const logout = () => {
+    localStorage.removeItem('userId');
+  
+  };
   return (
     <header id="header" className="header">
       <div className="header__img">
@@ -59,7 +65,7 @@ function Header() {
           <div id="btn" className="nav__logout">
             <ul>
               <li>
-                <button>Déconnexion</button>
+                <button type="click" onClick={logout}>Déconnexion</button>
               </li>
             </ul>
           </div>

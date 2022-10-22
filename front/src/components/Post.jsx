@@ -4,11 +4,15 @@ import axios from "axios";
 import avatar from "../logo/Default_pfp.svg.png";
 
 const Post = (props) => {
+  function DeletePost() {
+    let confirm = window.confirm("Supprimer la publication ?");
+    if (confirm == true) handleDelete();
+  }
+
   const handleDelete = () => {
     axios
       .delete(`http://localhost:3000/api/posts/${props.id}`)
       .then((res) => {
-        window.confirm("voulez-vous supprimer votre publication?");
         window.location.reload();
       })
       .catch((err) => {
@@ -26,11 +30,11 @@ const Post = (props) => {
           <h2> {props.title}</h2>
         </div>
         <div className="post__info">
-          <div className="post__user">
+          <div className="post__user" id={props.userId}>
             <p> @{props.username} -</p>
           </div>
           <div className="post__date">
-            <p> {props.date} </p>
+            <p>{props.date} </p>
           </div>
         </div>
 
@@ -63,7 +67,12 @@ const Post = (props) => {
             </span>
           </NavLink>
 
-          <span className="delete" onClick={() => handleDelete()}>
+          <span
+            className="delete"
+            onClick={() => {
+              DeletePost();
+            }}
+          >
             <i id="icon" className="fas fa-trash"></i>
           </span>
         </div>

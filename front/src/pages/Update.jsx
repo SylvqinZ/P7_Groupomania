@@ -8,19 +8,6 @@ const Update = () => {
   const [post, setPost] = useState([]);
   const { id } = useParams();
 
-  /*function setTitle(title) {
-    post.title = title;
-    setPost(post);
-  }
-  function setText(text) {
-    post.text = text;
-    setPost(post);
-  }
-  function setImage(imageUrl) {
-    post.imageUrl = imageUrl;
-    setPost(post);
-  }
-  */
   function setTitle(newTitle) {
     setPost({ ...post, title: newTitle });
   }
@@ -49,12 +36,29 @@ const Update = () => {
       });
   }, []);
 
+  let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  let newDate = new Date();
+  const date =
+    newDate.getDate() +
+    "." +
+    monthNames[newDate.getMonth()] +
+    " " +
+    newDate.getFullYear() +
+    " " +
+    newDate.getHours() +
+    ":" +
+    newDate.getMinutes() +
+    ":" +
+    newDate.getSeconds();
+
   const handleEdit = (e) => {
     e.preventDefault();
     let formData = new FormData();
     formData.append("title", post.title);
     formData.append("text", post.text);
     formData.append("image", post.imageUrl);
+    formData.append("date", date);
 
     axios
       .put("http://localhost:3000/api/posts/" + id, formData)

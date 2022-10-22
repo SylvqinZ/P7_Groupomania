@@ -2,6 +2,14 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 
+exports.getOneUser = (req, res) => {
+  User.findOne({
+    where: { id: req.params.id },
+  })
+    .then((user) => res.status(200).json(user))
+    .catch((error) => res.status(400).json({ error }));
+};
+
 exports.signup = (req, res, next) => {
   bcrypt
     .hash(req.body.password, 10)
@@ -9,7 +17,7 @@ exports.signup = (req, res, next) => {
       const user = new User({
         email: req.body.email,
         password: hash,
-        username:req.body.username
+        username: req.body.username,
       });
       user
         .save()
@@ -19,13 +27,11 @@ exports.signup = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-
 exports.login = (req, res, next) => {
   User.findOne({ email: req.body.email })
     .then((user) => {
       if (!user) {
         return res.status(401).json({ error: "Utilisateur non trouvé !" });
-        
       }
       bcrypt
         .compare(req.body.password, user.password)

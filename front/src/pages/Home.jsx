@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
-  
 
   useEffect(() => {
     axios
@@ -25,11 +24,12 @@ const Home = () => {
           <Post
             key={post._id}
             id={post._id}
+            userId={post.userId}
             title={post.title}
             text={post.text}
             image={post.imageUrl}
             username={post.username}
-            date="2022.09.19, 13:22:31"
+            date={post.date}
             avatar=""
           />
         ))}

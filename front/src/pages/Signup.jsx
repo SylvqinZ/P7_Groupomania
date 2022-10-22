@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SignupForm = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const signup = () => {
+  const HandleSubmit = (e) => {
+    e.preventDefault();
     axios
       .post("http://localhost:3000/api/auth/signup", {
         username: username,
@@ -14,6 +17,9 @@ const SignupForm = () => {
         password: password,
       })
       .then((res) => {
+        if (!email.match(emailReg)) {
+          alert("Le format de votre email est invalide");
+        } else navigate("/login");
         console.log(res);
       })
       .catch((err) => {
@@ -24,17 +30,11 @@ const SignupForm = () => {
 
   const emailReg = "^[A-Za-z0-9._-]+[@][A-Za-z0-9.-_]+[.][a-zA-Z]{2,3}$";
 
-  function emailValidator(email) {
-    if (!email.match(emailReg)) {
-      alert("Votre email est invalide");
-    }
-    signup();
-  }
   return (
     <main>
       <h1>S'inscrire</h1>
       <div className="container">
-        <form className="signup-form" onClick={(() => signup, () => emailValidator(email))}>
+        <form className="signup-form" onSubmit={HandleSubmit}>
           <div className="signup-form__group">
             <label className="signup-form_username" htmlFor="name">
               Nom

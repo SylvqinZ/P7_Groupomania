@@ -2,22 +2,24 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const SignupLogin = () => {
+const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const login = () => {
+  const HandleSubmit = (e) => {
+    e.preventDefault();
     axios
       .post("http://localhost:3000/api/auth/login", {
         email: email,
         password: password,
       })
       .then((res) => {
-        localStorage.setItem("id", res.data.userId);
-        localStorage.setItem("username", res.data.username);
-        
-        navigate("/home");
+        if (!email.match(emailReg)) {
+          alert("Le format de votre email est invalide");
+        } else navigate("/home");
+        localStorage.setItem("userId", res.data.userId);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log("error");
@@ -28,17 +30,11 @@ const SignupLogin = () => {
 
   const emailReg = "^[A-Za-z0-9._-]+[@][A-Za-z0-9.-_]+[.][a-zA-Z]{2,3}$";
 
-  function emailValidator(email) {
-    if (!email.match(emailReg)) {
-      alert("Votre email est invalide");
-    }
-    login();
-  }
   return (
     <main>
       <h1>Se connecter</h1>
       <div className="container">
-        <form className="login-form" onClick={(() => login, () => emailValidator(email))}>
+        <form className="login-form" onSubmit={HandleSubmit}>
           <div className="login-form__group">
             <label htmlFor="email">E-mail</label>
             <input
@@ -62,7 +58,7 @@ const SignupLogin = () => {
             />
           </div>
           <div className="login-form__btn">
-            <button className="btn" type="submit" color="primary">
+            <button className="btn" color="primary" type="submit">
               Se Connecter
             </button>
           </div>
@@ -72,4 +68,4 @@ const SignupLogin = () => {
   );
 };
 
-export default SignupLogin;
+export default LoginForm;
