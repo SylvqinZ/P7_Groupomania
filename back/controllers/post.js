@@ -10,7 +10,6 @@ exports.createPost = (req, res, next) => {
     ...postObject,
     //userId: req.auth.userId,
     userId: req.body.userId,
-    date: req.body.date,
     username: req.body.username,
     imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
   });
@@ -18,7 +17,7 @@ exports.createPost = (req, res, next) => {
     .save()
     .then(() => {
       res.status(201).json({ message: "Post créé !" });
-      console.log(req.body.timestamp);
+  
     })
     .catch((error) => {
       res.status(400).json({ error });

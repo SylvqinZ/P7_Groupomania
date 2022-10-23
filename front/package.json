@@ -21,7 +21,7 @@
   },
   "scripts": {
     "sass": "sass --watch ./src/styles/sass/main.scss ./src/styles/css/style.css",
-    "start": "PORT=4200 react-scripts start",
+    "start": "set PORT=4200 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

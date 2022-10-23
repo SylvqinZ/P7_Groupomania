@@ -19,7 +19,7 @@ const Create = () => {
         console.log("error");
         console.log(err);
       });
-  }, []);
+  }, [userId]);
 
   let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 

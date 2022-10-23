@@ -4,9 +4,10 @@ import axios from "axios";
 import avatar from "../logo/Default_pfp.svg.png";
 
 const Post = (props) => {
+  
   function DeletePost() {
     let confirm = window.confirm("Supprimer la publication ?");
-    if (confirm == true) handleDelete();
+    if (confirm === true) handleDelete();
   }
 
   const handleDelete = () => {
