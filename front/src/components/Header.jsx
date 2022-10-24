@@ -15,8 +15,8 @@ function Header() {
 
 
   const logout = () => {
-    localStorage.removeItem('userId');
-  
+    localStorage.clear();
+    window.location.reload()
   };
   return (
     <header id="header" className="header">

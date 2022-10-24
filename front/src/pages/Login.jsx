@@ -19,6 +19,7 @@ const LoginForm = () => {
           alert("Le format de votre email est invalide");
         } else navigate("/home");
         localStorage.setItem("userId", res.data.userId);
+        localStorage.setItem("token", "Bearer" + res.data.token);
         console.log(res.data);
       })
       .catch((err) => {
