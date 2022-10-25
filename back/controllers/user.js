@@ -3,10 +3,9 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 
 exports.getOneUser = (req, res) => {
-  User.findOne({
-    where: { id: req.params.id },
-  })
-    .then((user) => res.status(200).json(user))
+	let userId = req.params.id;
+	User.findOne({ _id: userId })
+    .then((user) => res.status(200).json(user.username))
     .catch((error) => res.status(400).json({ error }));
 };
 

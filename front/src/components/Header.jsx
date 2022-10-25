@@ -13,11 +13,12 @@ function Header() {
     }
   };
 
-
   const logout = () => {
-    localStorage.clear();
-    window.location.reload()
+    localStorage.setItem("userId", "");
+    localStorage.setItem("token", "");
+    window.location.reload();
   };
+  
   return (
     <header id="header" className="header">
       <div className="header__img">
@@ -65,7 +66,9 @@ function Header() {
           <div id="btn" className="nav__logout">
             <ul>
               <li>
-                <button type="click" onClick={logout}>Déconnexion</button>
+                <button type="click" onClick={logout}>
+                  Déconnexion
+                </button>
               </li>
             </ul>
           </div>

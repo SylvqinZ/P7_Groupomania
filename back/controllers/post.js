@@ -1,4 +1,5 @@
 const Post = require("../models/post");
+const User = require("../models/user");
 const fs = require("fs");
 
 exports.createPost = (req, res, next) => {
@@ -6,22 +7,42 @@ exports.createPost = (req, res, next) => {
   //const postData = req.body.post;
   delete postObject._id;
   delete postObject._userId;
-  const post = new Post({
-    ...postObject,
-    //userId: req.auth.userId,
-    userId: req.body.userId,
-    username: req.body.username,
-    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-  });
-  post
-    .save()
-    .then(() => {
-      res.status(201).json({ message: "Post créé !" });
-  
-    })
-    .catch((error) => {
-      res.status(400).json({ error });
-    });
+
+  // Checking given body.userId
+  if (req.body.userId == "") {
+    return res.status(401).json({ error: "Utilisateur incorrect !" });
+  } else {
+    // Checking given user
+    User.findOne({ _id: req.body.userId })
+      .then((user) => {
+        if (!user) {
+          return res.status(401).json({ error: "Utilisateur non trouvé !" });
+        } else {
+          // Checking giver body.userId vs auth.userId
+          if (req.body.userId !== req.auth.userId) {
+            res.status(403).json({ error: "Vous n'êtes pas l'auteur du post" });
+          } else {
+            // Creating post
+            const post = new Post({
+              ...postObject,
+              userId: req.body.userId,
+              imageUrl: `${req.protocol}://${req.get("host")}/images/${
+                req.file.filename
+              }`,
+            });
+            post
+              .save()
+              .then(() => {
+                res.status(201).json({ message: "Post créé !" });
+              })
+              .catch((error) => {
+                res.status(400).json({ error });
+              });
+          }
+        }
+      })
+      .catch((error) => res.status(500).json({ error }));
+  }
 };
 
 exports.getOnePost = (req, res, next) => {
@@ -51,11 +72,16 @@ exports.updatePost = (req, res, next) => {
 
           postObject = {
             ...req.body,
-            imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+            imageUrl: `${req.protocol}://${req.get("host")}/images/${
+              req.file.filename
+            }`,
           };
         }
 
-        Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
+        Post.updateOne(
+          { _id: req.params.id },
+          { ...postObject, _id: req.params.id }
+        )
           .then(() => {
             res.status(200).json({ message: "Post updated !" });
           })
@@ -105,17 +131,29 @@ exports.getAllPosts = (req, res, next) => {
 exports.likePost = (req, res) => {
   Post.findOne({ _id: req.params.id }).then((post) => {
     if (!post.usersLiked.includes(req.body.userId) && req.body.like === 1) {
-      Post.updateOne({ _id: req.params.id }, { $inc: { likes: 1 }, $push: { usersLiked: req.body.userId } })
+      Post.updateOne(
+        { _id: req.params.id },
+        { $inc: { likes: 1 }, $push: { usersLiked: req.body.userId } }
+      )
         .then(() => res.status(200).json({ message: "Like added" }))
         .catch((error) => res.status(400).json({ error }));
-    } else if (!post.usersDisliked.includes(req.body.userId) && req.body.like === -1) {
-      Post.updateOne({ _id: req.params.id }, { $inc: { dislikes: 1 }, $push: { usersDisliked: req.body.userId } })
+    } else if (
+      !post.usersDisliked.includes(req.body.userId) &&
+      req.body.like === -1
+    ) {
+      Post.updateOne(
+        { _id: req.params.id },
+        { $inc: { dislikes: 1 }, $push: { usersDisliked: req.body.userId } }
+      )
         .then(() => res.status(200).json({ message: "Dislike added" }))
         .catch((error) => res.status(400).json({ error }));
     } else {
       Post.findOne({ _id: req.params.id }).then((resultat) => {
         if (resultat.usersLiked.includes(req.body.userId)) {
-          Post.updateOne({ _id: req.params.id }, { $inc: { likes: -1 }, $pull: { usersLiked: req.body.userId } })
+          Post.updateOne(
+            { _id: req.params.id },
+            { $inc: { likes: -1 }, $pull: { usersLiked: req.body.userId } }
+          )
             .then(() => res.status(200).json({ message: "Like removed" }))
             .catch((error) => res.status(400).json({ error }));
         } else if (resultat.usersDisliked.includes(req.body.userId)) {

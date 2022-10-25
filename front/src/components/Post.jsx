@@ -1,9 +1,29 @@
 import "../styles/css/style.css";
 import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import avatar from "../logo/Default_pfp.svg.png";
 
 const Post = (props) => {
+  const [userName, setUserName] = useState('');
+  const [date, setDate] = useState('');
+  
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/api/auth/${props.userId}`)
+      .then((res) => {
+        setUserName(res.data);
+        setDate(res.data)
+        console.log(res.data);
+      })
+      .catch((err) => {
+        setUserName('unknown');
+        setDate('unknown')
+        console.log("error");
+        console.log(err);
+      });
+  }, [props.userId]);
   
   function DeletePost() {
     let confirm = window.confirm("Supprimer la publication ?");
@@ -32,10 +52,10 @@ const Post = (props) => {
         </div>
         <div className="post__info">
           <div className="post__user" id={props.userId}>
-            <p> @{props.username} -</p>
+            <p> @{userName} -</p>
           </div>
           <div className="post__date">
-            <p>{props.date} </p>
+            <p>{date} </p>
           </div>
         </div>
 

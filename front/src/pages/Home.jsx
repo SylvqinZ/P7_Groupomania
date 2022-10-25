@@ -8,6 +8,7 @@ const Home = () => {
   const orderedDates = posts.sort((a, b) => {
     return new Date(a.date) - new Date(b.date);
   });
+
   useEffect(() => {
     axios
       .get(`http://localhost:3000/api/posts`)
@@ -31,8 +32,6 @@ const Home = () => {
             title={post.title}
             text={post.text}
             image={post.imageUrl}
-            username={post.username}
-            date={post.date}
             avatar=""
           />
         ))}
