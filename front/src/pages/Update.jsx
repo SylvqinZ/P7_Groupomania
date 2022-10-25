@@ -36,15 +36,12 @@ const Update = () => {
       });
   }, [id]);
 
-  
-
   const handleEdit = (e) => {
     e.preventDefault();
     let formData = new FormData();
     formData.append("title", post.title);
     formData.append("text", post.text);
     formData.append("image", post.imageUrl);
-    
 
     axios
       .put("http://localhost:3000/api/posts/" + id, formData)
