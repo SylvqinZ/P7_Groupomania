@@ -33,6 +33,7 @@ const Home = () => {
             text={post.text}
             image={post.imageUrl}
             avatar=""
+            date={new Date(post.updatedAt).toLocaleString("fr-FR")}
           />
         ))}
       </section>

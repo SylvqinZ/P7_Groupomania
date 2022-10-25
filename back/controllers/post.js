@@ -117,9 +117,10 @@ exports.deletePost = (req, res, next) => {
 };
 
 exports.getAllPosts = (req, res, next) => {
-  Post.find()
+  Post.find().sort({ updatedAt: +1 })
     .then((post) => {
       res.status(200).json(post);
+      
     })
     .catch((error) => {
       res.status(400).json({

@@ -5,26 +5,21 @@ import axios from "axios";
 import avatar from "../logo/Default_pfp.svg.png";
 
 const Post = (props) => {
-  const [userName, setUserName] = useState('');
-  const [date, setDate] = useState('');
-  
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     axios
       .get(`http://localhost:3000/api/auth/${props.userId}`)
       .then((res) => {
         setUserName(res.data);
-        setDate(res.data)
-        console.log(res.data);
       })
       .catch((err) => {
-        setUserName('unknown');
-        setDate('unknown')
+        setUserName("unknown");
         console.log("error");
         console.log(err);
       });
   }, [props.userId]);
-  
+
   function DeletePost() {
     let confirm = window.confirm("Supprimer la publication ?");
     if (confirm === true) handleDelete();
@@ -55,7 +50,7 @@ const Post = (props) => {
             <p> @{userName} -</p>
           </div>
           <div className="post__date">
-            <p>{date} </p>
+            <p>{props.date} </p>
           </div>
         </div>
 

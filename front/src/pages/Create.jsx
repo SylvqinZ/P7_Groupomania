@@ -7,24 +7,11 @@ const Create = () => {
   const [post, setPost] = useState({});
   const navigate = useNavigate();
   const userId = localStorage.getItem("userId") ?? '';
-//  const [userData, setUserData] = useState({});
-
-// useEffect(() => {
-//   axios
-//     .get(`http://localhost:3000/api/auth/${userId}`)
-//     .then((res) => {
-//       setUserData(res.data);
-//     })
-//     .catch((err) => {
-//       console.log("error");
-//       console.log(err);
-//     });
-// }, [userId]);
 
   //let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-  //let newDate = new Date();
-  //const date = newDate.toLocaleString()
+ // let newDate = new Date();
+ // const date = newDate.toLocaleString()
 //    newDate.getDate() +
 //    "." +
 //    monthNames[newDate.getMonth()] +
@@ -49,6 +36,7 @@ const Create = () => {
     post.imageUrl = imageUrl;
     setPost(post);
   }
+  
 
   const onImageChange = (e) => {
     const [file] = e.target.files;
@@ -63,10 +51,10 @@ const Create = () => {
     let formData = new FormData();
     formData.append("userId", userId);
     formData.append("title", post.title);
-   // formData.append("date", date);
+   // formData.append("timestamps", date);
     formData.append("text", post.text);
     formData.append("image", post.imageUrl);
-//    formData.append("username", userData.username);
+
 
     axios
       .post(`http://localhost:3000/api/posts`, formData, {
