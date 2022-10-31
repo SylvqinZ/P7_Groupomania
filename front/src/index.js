@@ -19,14 +19,16 @@ root.render(
     <Router>
       <Header />
       <Routes>
-        <Route path="/" element={<Navigate to="/Home" />} />
+        <Route path="/"  />
         <Route path="/Home" element={<Home />} />
         <Route path="/Create" element={<Create />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Update/:id" element={<Update />} />
       </Routes>
+    
     </Router>
     <Footer />
   </React.StrictMode>
+  
 );

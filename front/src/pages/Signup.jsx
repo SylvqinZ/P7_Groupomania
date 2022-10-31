@@ -41,7 +41,7 @@ const SignupForm = () => {
             </label>
             <input
               type="text"
-              id="input-signup-username"
+              id="name"
               formcontrolname="username"
               onChange={(e) => {
                 setUsername(e.target.value);
@@ -52,7 +52,7 @@ const SignupForm = () => {
             <label htmlFor="email">E-mail</label>
             <input
               type="email"
-              id="input-email"
+              id="email"
               formcontrolname="email"
               onChange={(e) => {
                 setEmail(e.target.value);

@@ -7,6 +7,7 @@ const Update = () => {
   const [previewImage, setPreviewImage] = useState([]);
   const [post, setPost] = useState([]);
   const { id } = useParams();
+  let token = localStorage.getItem("token") ?? "none";
 
   function setTitle(newTitle) {
     setPost({ ...post, title: newTitle });
@@ -26,7 +27,11 @@ const Update = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/posts/${id}`)
+      .get(`http://localhost:3000/api/posts/${id}`, {
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      })
       .then((res) => {
         setPost(res.data);
         setPreviewImage(res.data.imageUrl);
@@ -44,9 +49,12 @@ const Update = () => {
     formData.append("image", post.imageUrl);
 
     axios
-      .put("http://localhost:3000/api/posts/" + id, formData)
+      .put("http://localhost:3000/api/posts/" + id, formData, {
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      })
       .then((res) => {
-        console.log(res);
         navigate("/home");
       })
       .catch((err) => {
