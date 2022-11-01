@@ -48,26 +48,26 @@ const Post = (props) => {
       });
   };
 
-  // const [likes, setLikes] = useState();
-  // const [dislikes, setDislikes] = useState();
-  // const [usersLiked, setUsersLiked] = useState();
+  const [likes, setLikes] = useState();
+  const [dislikes, setDislikes] = useState();
+  const [usersLiked, setUsersLiked] = useState();
 
-  // const HandleLike =  (e) => {
-  //  e.preventDefault()
-  //   axios
-  //     .post(`http://localhost:3000/api/posts/${props.id}/like`, {
+  const HandleLike =  (e) => {
+   e.preventDefault()
+    axios
+      .post(`http://localhost:3000/api/posts/${props.id}/like`, {
 
-  //     })
-  //     .then((res) => {
+      })
+      .then((res) => {
        
-  //       console.log(res);
-  //       console.log("res");
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       console.log("error");
-  //     });
-  // };
+        console.log(res);
+        console.log("res");
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("error");
+      });
+  };
 
   if (userId === props.userId /*|| admin */) {
     return (
