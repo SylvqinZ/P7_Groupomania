@@ -17,6 +17,7 @@ function Header() {
     })
     .then((res) => {
       setIsLoggedIn(true);
+
     })
     .catch((err) => {
       setIsLoggedIn(false);

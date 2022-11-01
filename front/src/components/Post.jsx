@@ -7,15 +7,17 @@ import avatar from "../logo/Default_pfp.svg.png";
 const Post = (props) => {
   const [userName, setUserName] = useState("");
   const userId = localStorage.getItem("userId") ?? "";
-  let token = localStorage.getItem("token") ?? "none";
+  const token = localStorage.getItem("token") ?? "none";
   // const [isLoggedIn, setIsLoggedIn] = useState();
 
+  // SET USERNAME
   useEffect(() => {
     axios
       .get(`http://localhost:3000/api/auth/${props.userId}`)
       .then((res) => {
         setUserName(res.data);
         //  setIsLoggedIn(true)
+        
       })
       .catch((err) => {
         setUserName("unknown");
@@ -25,6 +27,7 @@ const Post = (props) => {
       });
   }, [props.userId]);
 
+  // DELETE POST
   function DeletePost() {
     let confirm = window.confirm("Supprimer la publication ?");
     if (confirm === true) handleDelete();
@@ -37,7 +40,6 @@ const Post = (props) => {
           Authorization: `Basic ${token}`,
         },
       })
-
       .then((res) => {
         window.location.reload();
       })
@@ -45,6 +47,28 @@ const Post = (props) => {
         console.log(err);
       });
   };
+
+  // const [likes, setLikes] = useState();
+  // const [dislikes, setDislikes] = useState();
+  // const [usersLiked, setUsersLiked] = useState();
+
+  // const HandleLike =  (e) => {
+  //  e.preventDefault()
+  //   axios
+  //     .post(`http://localhost:3000/api/posts/${props.id}/like`, {
+
+  //     })
+  //     .then((res) => {
+       
+  //       console.log(res);
+  //       console.log("res");
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       console.log("error");
+  //     });
+  // };
+
   if (userId === props.userId /*|| admin */) {
     return (
       <article id={props.id} className="post">
@@ -73,21 +97,26 @@ const Post = (props) => {
           </div>
 
           <div className="post__btn">
-            <div className="like">
-              <span className="like__btn">
+            <div id="like" className="like">
+              <span
+                className="like__btn"
+                onClick={(e) => {
+                  HandleLike(e);
+                }}
+              >
                 <i id="icon" className="fas fa-thumbs-up"></i>
               </span>
-              <div className="like__counter">(x)</div>
+              <div className="like__counter">{props.likes}</div>
             </div>
 
             <div className="dislike">
               <span className="dislike__btn">
                 <i id="icon" className="fas fa-thumbs-down"></i>
               </span>
-              <div className="dislike__counter">(x)</div>
+              <div className="dislike__counter">{props.dislikes}</div>
             </div>
 
-            <NavLink to={`/update/${props.id}`}>
+            <NavLink to={`/create/${props.id}`}>
               <span className="update">
                 <i id="icon" className=" fas fa-pen"></i>
               </span>
@@ -134,22 +163,27 @@ const Post = (props) => {
 
           <div className="post__btn">
             <div className="like">
-              <span className="like__btn">
+              <span
+                className="like__btn"
+                onClick={() => {
+                  HandleLike();
+                }}
+              >
                 <i id="icon" className="fas fa-thumbs-up"></i>
               </span>
-              <div className="like__counter">(x)</div>
+              <div className="like__counter">{props.likes}</div>
             </div>
 
             <div className="dislike">
               <span className="dislike__btn">
                 <i id="icon" className="fas fa-thumbs-down"></i>
               </span>
-              <div className="dislike__counter">(x)</div>
+              <div className="dislike__counter">{props.dislikes}</div>
             </div>
 
             <span className="update"></span>
 
-            <span className="delete" ></span>
+            <span className="delete"></span>
           </div>
         </div>
       </article>

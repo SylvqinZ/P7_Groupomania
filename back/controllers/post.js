@@ -62,7 +62,7 @@ exports.updatePost = (req, res, next) => {
           .then(() => {
             res.status(200).json({ message: "Post updated !" });
           })
-          .catch((error) => res.status(401).json({ error }));
+          .catch((error) => res.status(401).json({ error}));
       }
     })
     .catch((error) => {
@@ -97,29 +97,6 @@ exports.getOnePost = (req, res, next) => {
     });
 };
 
-// exports.deletePost = (req, res) => {
-//   Post.findOne({ _id: req.params.id })
-//     // find post image to delete it
-//     .then((post) => {
-//       if (!post) {
-//         return res.status(404).json({ message: "Post non trouvée !" });
-//       }
-//       const filename = post.imageUrl.split("/images/")[1]; // split URL to get filename
-//       fs.unlink(`images/${filename}`, () => {
-//         Post.deleteOne({ _id: req.params.id })
-//           .then((post) => {
-//             const message = "the post was succesfully deleted";
-//             res.json({ message, data: post });
-//           })
-//           .catch((error) => res.status(400).json({ error }));
-//       });
-//     })
-//     .catch((error) => {
-//       const message = `The post couldn't be deleted, please try again`;
-//       res.status(500).json({ message, data: error });
-//     });
-// };
-
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id })
     .then((post) => {
@@ -130,35 +107,41 @@ exports.deletePost = (req, res, next) => {
         fs.unlink(`images/${filename}`, () => {
           Post.deleteOne({ _id: req.params.id })
             .then(() => {
-              res.status(200).json({ message: "Post supprimé !" });
+              res.status(200).json({ message: "Post deleted" });
             })
             .catch((error) => res.status(401).json({ error }));
         });
       }
     })
     .catch((error) => {
-      const message = `The post couldn't be deleted, please try again`;
-      res.status(500).json({ message, data: error });
+      res.status(500).json({ error });
     });
 };
 
 exports.likePost = (req, res) => {
-  Post.findOne({ _id: req.params.id }).then((post) => {
+  Post.findOne({ _id: req.params.id })
+  .then((post) => {
     if (!post.usersLiked.includes(req.body.userId) && req.body.like === 1) {
       Post.updateOne({ _id: req.params.id }, { $inc: { likes: 1 }, $push: { usersLiked: req.body.userId } })
-        .then(() => res.status(200).json({ message: "Like added" }))
-        .catch((error) => res.status(400).json({ error }));
+        .then(() => 
+        res.status(200).json({ message: "Like added" }))
+        .catch((error) => 
+        res.status(400).json({ error }));
     } else if (!post.usersDisliked.includes(req.body.userId) && req.body.like === -1) {
       Post.updateOne({ _id: req.params.id }, { $inc: { dislikes: 1 }, $push: { usersDisliked: req.body.userId } })
-        .then(() => res.status(200).json({ message: "Dislike added" }))
-        .catch((error) => res.status(400).json({ error }));
+        .then(() => 
+        res.status(200).json({ message: "Dislike added" }))
+        .catch((error) => 
+        res.status(400).json({ error }));
     } else {
-      Post.findOne({ _id: req.params.id }).then((resultat) => {
-        if (resultat.usersLiked.includes(req.body.userId)) {
+      Post.findOne({ _id: req.params.id }).then((res) => {
+        if (res.usersLiked.includes(req.body.userId)) {
           Post.updateOne({ _id: req.params.id }, { $inc: { likes: -1 }, $pull: { usersLiked: req.body.userId } })
-            .then(() => res.status(200).json({ message: "Like removed" }))
-            .catch((error) => res.status(400).json({ error }));
-        } else if (resultat.usersDisliked.includes(req.body.userId)) {
+            .then(() => 
+            res.status(200).json({ message: "Like removed" }))
+            .catch((error) => 
+            res.status(400).json({ error }));
+        } else if (res.usersDisliked.includes(req.body.userId)) {
           Post.updateOne(
             { _id: req.params.id },
             {

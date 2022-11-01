@@ -32,6 +32,7 @@ const Home = () => {
       })
       .then((res) => {
         setPosts(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -50,6 +51,9 @@ const Home = () => {
               userId={post.userId}
               title={post.title}
               text={post.text}
+              likes={post.likes}
+              dislikes={post.dislikes}
+              usersLiked={post.usersLiked}
               image={post.imageUrl}
               date={new Date(post.updatedAt).toLocaleString("fr-FR")}
             />

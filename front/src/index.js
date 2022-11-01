@@ -19,12 +19,12 @@ root.render(
     <Router>
       <Header />
       <Routes>
-        <Route path="/"  />
+        <Route path="/" element={<Navigate to="/Home" />} />
         <Route path="/Home" element={<Home />} />
         <Route path="/Create" element={<Create />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/Update/:id" element={<Update />} />
+        <Route path="/Create/:id" element={<Create />} />
       </Routes>
     
     </Router>
