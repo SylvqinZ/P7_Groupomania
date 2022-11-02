@@ -35,7 +35,7 @@ const SignupForm = () => {
       <h1>S'inscrire</h1>
       <div className="container">
         <form className="signup-form" onSubmit={HandleSubmit}>
-          <div className="signup-form__group">
+          <label htmlFor="name" className="signup-form__group">
             <label className="signup-form_username" htmlFor="name">
               Nom
             </label>
@@ -47,8 +47,9 @@ const SignupForm = () => {
                 setUsername(e.target.value);
               }}
             />
-          </div>
-          <div className="signup-form__group">
+          </label>
+
+          <label htmlFor="email" className="signup-form__group">
             <label htmlFor="email">E-mail</label>
             <input
               type="email"
@@ -58,8 +59,9 @@ const SignupForm = () => {
                 setEmail(e.target.value);
               }}
             />
-          </div>
-          <div className="signup-form__group">
+          </label>
+
+          <label htmlFor="password" className="signup-form__group">
             <label htmlFor="password">Mot de passe</label>
             <input
               type="password"
@@ -69,7 +71,8 @@ const SignupForm = () => {
                 setPassword(e.target.value);
               }}
             />
-          </div>
+          </label>
+
           <div className="signup-form__btn">
             <button className="btn" type="submit" color="primary">
               S'inscrire

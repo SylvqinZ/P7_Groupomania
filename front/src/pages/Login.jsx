@@ -55,7 +55,7 @@ const LoginForm = () => {
         <h1>Se connecter</h1>
         <div className="container">
           <form className="login-form" onSubmit={HandleSubmit}>
-            <div className="login-form__group">
+            <label  htmlFor="email" className="login-form__group">
               <label htmlFor="email">E-mail</label>
               <input
                 type="email"
@@ -65,8 +65,8 @@ const LoginForm = () => {
                   setEmail(e.target.value);
                 }}
               />
-            </div>
-            <div className="login-form__group">
+            </label>
+            <label  htmlFor="password"className="login-form__group">
               <label htmlFor="password">Mot de passe</label>
               <input
                 type="password"
@@ -76,7 +76,7 @@ const LoginForm = () => {
                   setPassword(e.target.value);
                 }}
               />
-            </div>
+            </label>
             <div className="login-form__btn">
               <button className="btn" color="primary" type="submit">
                 Se Connecter
