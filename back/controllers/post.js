@@ -9,17 +9,17 @@ exports.createPost = (req, res, next) => {
 
   // Checking given body.userId
   if (req.body.userId == "") {
-    return res.status(401).json({ error: "Utilisateur incorrect !" });
+    return res.status(401).json({ error: "wrong user" });
   } else {
     // Checking given user
     User.findOne({ _id: req.body.userId })
       .then((user) => {
         if (!user) {
-          return res.status(401).json({ error: "Utilisateur non trouvé !" });
+          return res.status(401).json({ error: "user not found" });
         } else {
           // Checking giver body.userId vs auth.userId
           if (req.body.userId !== req.auth.userId) {
-            res.status(403).json({ error: "Vous n'êtes pas l'auteur du post" });
+            res.status(403).json({ error: "not authorized" });
           } else {
             // Creating post
             const post = new Post({
@@ -30,7 +30,7 @@ exports.createPost = (req, res, next) => {
             post
               .save()
               .then(() => {
-                res.status(201).json({ message: "Post créé !" });
+                res.status(201).json({ message: "post created" });
               })
               .catch((error) => {
                 res.status(400).json({ error });
@@ -46,7 +46,7 @@ exports.updatePost = (req, res, next) => {
   let postObject = { ...req.body };
   Post.findOne({ _id: req.params.id })
     .then((post) => {
-      if (post.userId != req.auth.userId) {
+      if (post.userId != req.auth.userId && req.auth.admin === 0) {
         res.status(403).json({ message: "Not authorized" });
       } else {
         if (req.file) {
@@ -100,7 +100,7 @@ exports.getOnePost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id })
     .then((post) => {
-      if (post.userId != req.auth.userId) {
+      if (post.userId != req.auth.userId && req.auth.admin === 0) {
         res.status(401).json({ message: "Not authorized" });
       } else {
         const filename = post.imageUrl.split("/images/")[1];

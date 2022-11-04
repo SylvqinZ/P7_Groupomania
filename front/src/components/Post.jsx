@@ -5,23 +5,30 @@ import axios from "axios";
 import avatar from "../logo/Default_pfp.svg.png";
 
 const Post = (props) => {
-  const [userName, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const userId = localStorage.getItem("userId") ?? "";
   const token = localStorage.getItem("token") ?? "none";
-  // const [isLoggedIn, setIsLoggedIn] = useState();
+
+  // function Admin() {
+  //   if (userId === "63650aabd1408498d5112e0c") {
+  //     return Admin();
+  //   }
+  // }
 
   // SET USERNAME
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/auth/${props.userId}`)
+      .get(`http://localhost:3000/api/auth/${props.userId}`, {
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      })
       .then((res) => {
-        setUserName(res.data);
-        //  setIsLoggedIn(true)
-        
+        setUsername(res.data);
+        console.log(res);
       })
       .catch((err) => {
-        setUserName("unknown");
-        // setIsLoggedIn(false)
+        setUsername("unknown");
         console.log("error");
         console.log(err);
       });
@@ -52,14 +59,11 @@ const Post = (props) => {
   const [dislikes, setDislikes] = useState();
   const [usersLiked, setUsersLiked] = useState();
 
-  const HandleLike =  (e) => {
-   e.preventDefault()
+  const HandleLike = (e) => {
+    e.preventDefault();
     axios
-      .post(`http://localhost:3000/api/posts/${props.id}/like`, {
-
-      })
+      .post(`http://localhost:3000/api/posts/${props.id}/like`, {})
       .then((res) => {
-       
         console.log(res);
         console.log("res");
       })
@@ -69,7 +73,7 @@ const Post = (props) => {
       });
   };
 
-  if (userId === props.userId /*|| admin */) {
+  if (userId === props.userId ) {
     return (
       <article id={props.id} className="post">
         <div className="post__avatar">
@@ -81,7 +85,7 @@ const Post = (props) => {
           </div>
           <div className="post__info">
             <div className="post__user" id={props.userId}>
-              <p> @{userName} -</p>
+              <p> @{username} -</p>
             </div>
             <div className="post__date">
               <p>{props.date} </p>
@@ -116,7 +120,7 @@ const Post = (props) => {
               <div className="dislike__counter">{props.dislikes}</div>
             </div>
 
-            <NavLink to={`/create/${props.id}`}>
+            <NavLink to={`/update/${props.id}`}>
               <span className="update">
                 <i id="icon" className=" fas fa-pen"></i>
               </span>
@@ -146,7 +150,7 @@ const Post = (props) => {
           </div>
           <div className="post__info">
             <div className="post__user" id={props.userId}>
-              <p> @{userName} -</p>
+              <p> @{username} -</p>
             </div>
             <div className="post__date">
               <p>{props.date} </p>

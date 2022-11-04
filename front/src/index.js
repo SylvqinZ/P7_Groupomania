@@ -24,7 +24,7 @@ root.render(
         <Route path="/Create" element={<Create />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/Create/:id" element={<Create />} />
+        <Route path="/Update/:id" element={<Create />} />
       </Routes>
     
     </Router>
