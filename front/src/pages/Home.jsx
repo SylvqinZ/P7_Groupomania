@@ -4,23 +4,23 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const userId = localStorage.getItem("userId") ?? "";
-  let token = localStorage.getItem("token") ?? "none";
-  const [isLoggedIn, setIsLoggedIn] = useState();
+  let userData = JSON.parse(localStorage.getItem("userData"));
+  let userId = "";
+  let token = "";
+  let admin = "";
 
-  axios
-    .get(`http://localhost:3000/api/auth/${userId}`, {
-      headers: {
-        Authorization: `Basic ${token}`,
-      },
-    })
-    .then((res) => {
-      setIsLoggedIn(true);
-    })
-    .catch((err) => {
-      setIsLoggedIn(false);
-      console.log(err);
-    });
+  if (userData) {
+    userId = userData.userId;
+    token = userData.token;
+    admin = userData.admin;
+  }
+
+  // IS LOGGED IN
+  function isLoggedIn() {
+    if (userData && userId && token && admin) {
+      return isLoggedIn;
+    }
+  }
 
   const [posts, setPosts] = useState([]);
   useEffect(() => {
@@ -32,7 +32,6 @@ const Home = () => {
       })
       .then((res) => {
         setPosts(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);

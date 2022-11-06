@@ -5,9 +5,18 @@ import axios from "axios";
 const Create = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const userId = localStorage.getItem("userId") ?? "";
-  const token = localStorage.getItem("token") ?? "none";
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  let userData = JSON.parse(localStorage.getItem("userData"));
+  let userId = "";
+  let token = "";
+  let admin = "";
+
+  if (userData) {
+    userId = userData.userId;
+    token = userData.token;
+    admin = userData.admin;
+  }
+
   const [previewImage, setPreviewImage] = useState([]);
   const [post, setPost] = useState({});
 
@@ -28,19 +37,11 @@ const Create = () => {
   };
 
   // IS LOGGED IN
-  axios
-    .get(`http://localhost:3000/api/auth/${userId}`, {
-      headers: {
-        Authorization: `Basic ${token}`,
-      },
-    })
-    .then((res) => {
-      setIsLoggedIn(true);
-    })
-    .catch((err) => {
-      setIsLoggedIn(false);
-      console.log(err);
-    });
+  function isLoggedIn() {
+    if (userData && userId && token && admin) {
+      return isLoggedIn;
+    }
+  }
 
   useEffect(() => {
     if (id != post.id) {
@@ -62,7 +63,7 @@ const Create = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let token = localStorage.getItem("token") ?? "none";
+
     let formData = new FormData();
     formData.append("userId", userId);
     formData.append("title", post.title);

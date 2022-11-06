@@ -17,45 +17,49 @@ const LoginForm = () => {
       .then((res) => {
         if (!email.match(emailReg)) {
           alert("Le format de votre email est invalide");
-        } else window.location.reload();
-        localStorage.setItem("userId", res.data.userId);
-        localStorage.setItem("token", res.data.token);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log("error");
-        console.log(err);
-        alert("ERROR");
+        } else navigate("/home");
+        // localStorage.setItem("userId", res.data.userId);
+        // localStorage.setItem("token", res.data.token);
+        // localStorage.setItem("admin", res.data.admin);
+        const dataUser = {
+          userId: res.data.userId,
+          token: res.data.token,
+          admin: res.data.admin,
+        };
+        localStorage.setItem("userData", JSON.stringify(dataUser));
+
+        console.log(res.data).catch((err) => {
+          console.log("error");
+          console.log(err);
+          alert("ERROR");
+        });
       });
   };
 
-  const userId = localStorage.getItem("userId") ?? "";
-  let token = localStorage.getItem("token") ?? "none";
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  let userData = JSON.parse(localStorage.getItem("userData"));
+  let userId = "";
+  let token = "";
+  let admin = "";
 
-  axios
-    .get(`http://localhost:3000/api/auth/${userId}`, {
-      headers: {
-        Authorization: `Basic ${token}`,
-      },
-    })
-    .then((res) => {
-      setIsLoggedIn(true);
-      console.log(res);
-    })
-    .catch((err) => {
-      setIsLoggedIn(false);
-      console.log(err);
-    });
+  if (userData) {
+    userId = userData.userId;
+    token = userData.token;
+    admin = userData.admin;
+  }
+  function isLoggedIn() {
+    if (userData && userId && token && admin) {
+      return isLoggedIn;
+    }
+  }
 
   const emailReg = "^[A-Za-z0-9._-]+[@][A-Za-z0-9.-_]+[.][a-zA-Z]{2,3}$";
-  if (!isLoggedIn) {
+  if (!isLoggedIn()) {
     return (
       <main>
         <h1>Se connecter</h1>
         <div className="container">
           <form className="login-form" onSubmit={HandleSubmit}>
-            <label  htmlFor="email" className="login-form__group">
+            <label htmlFor="email" className="login-form__group">
               <label htmlFor="email">E-mail</label>
               <input
                 type="email"
@@ -66,7 +70,7 @@ const LoginForm = () => {
                 }}
               />
             </label>
-            <label  htmlFor="password"className="login-form__group">
+            <label htmlFor="password" className="login-form__group">
               <label htmlFor="password">Mot de passe</label>
               <input
                 type="password"
@@ -86,9 +90,7 @@ const LoginForm = () => {
         </div>
       </main>
     );
-  }
-  else {
-    navigate("/home")
+  } else {
   }
 };
 

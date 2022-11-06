@@ -134,14 +134,16 @@ exports.likePost = (req, res) => {
         .catch((error) => 
         res.status(400).json({ error }));
     } else {
-      Post.findOne({ _id: req.params.id }).then((res) => {
-        if (res.usersLiked.includes(req.body.userId)) {
+
+
+      Post.findOne({ _id: req.params.id }).then((myPost) => {
+        if (myPost.usersLiked.includes(req.body.userId)) {
           Post.updateOne({ _id: req.params.id }, { $inc: { likes: -1 }, $pull: { usersLiked: req.body.userId } })
             .then(() => 
             res.status(200).json({ message: "Like removed" }))
             .catch((error) => 
             res.status(400).json({ error }));
-        } else if (res.usersDisliked.includes(req.body.userId)) {
+        } else if (myPost.usersDisliked.includes(req.body.userId)) {
           Post.updateOne(
             { _id: req.params.id },
             {
@@ -151,6 +153,9 @@ exports.likePost = (req, res) => {
           )
             .then(() => res.status(200).json({ message: "Dislike removed" }))
             .catch((error) => res.status(400).json({ error }));
+        }
+        else {
+          res.status(500).json({message: "unknown error"})
         }
       });
     }
