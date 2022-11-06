@@ -15,19 +15,18 @@ const Header = () => {
   };
 
   const navigate = useNavigate();
-  
+
   let userId = "";
   let token = "";
-  let admin = "";
+
   let userData = JSON.parse(localStorage.getItem("userData"));
   if (userData) {
     userId = userData.userId;
     token = userData.token;
-    admin = userData.admin;
   }
 
   function isLoggedIn() {
-    if ((userData, userId, token /*admin*/)) {
+    if ((userData, userId, token)) {
       return true;
     } else {
       return false;
