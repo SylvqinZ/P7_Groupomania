@@ -3,34 +3,19 @@ import { NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import avatar from "../logo/Default_pfp.svg.png";
+import { getUserData, setUserData, isLoggedIn, isAuthorized } from "../utils/lib";
 
 const Post = (props) => {
   const [username, setUsername] = useState("");
+	const userData = getUserData();
+	const authorized = isAuthorized(props.userId);
 
-  let userData = JSON.parse(localStorage.getItem("userData"));
-  let userId = "";
-  let token = "";
-  let admin = "";
-
-  if (userData) {
-    userId = userData.userId;
-    token = userData.token;
-    admin = userData.admin;
-  }
-
-  function givePermission() {
-    if (userId === props.userId || admin === true) {
-      return true;
-    } else {
-      return false;
-    }
-  }
   // SET USERNAME
   useEffect(() => {
     axios
       .get(`http://localhost:3000/api/auth/${props.userId}`, {
         headers: {
-          Authorization: `Basic ${token}`,
+          Authorization: `Basic ${userData.token}`,
         },
       })
       .then((res) => {
@@ -41,44 +26,43 @@ const Post = (props) => {
         console.log("error");
         console.log(err);
       });
-  }, [props.userId, token]);
+  }, [props.userId, userData.token]);
 
   // DELETE POST
-  function DeletePost() {
-    let confirm = window.confirm("Supprimer la publication ?");
-    if (confirm === true) handleDelete();
+  function deletePost() {
+  	if(window.confirm("Supprimer la publication ?")) {
+  		axios
+  		  .delete(`http://localhost:3000/api/posts/${props.id}`, {
+  		    headers: {
+  		      Authorization: `Basic ${userData.token}`,
+  		    },
+  		  })
+  		  .then((res) => {
+  		  	document.getElementById(`post-${props.id}`).remove();
+  		  })
+  		  .catch((err) => {
+  		    console.log(err);
+  		  });
+  	}
   }
 
-  const handleDelete = () => {
-    axios
-      .delete(`http://localhost:3000/api/posts/${props.id}`, {
-        headers: {
-          Authorization: `Basic ${token}`,
-        },
-      })
-      .then((res) => {
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  const [likes, setLikes] = useState('?');
+  const [dislikes, setDislikes] = useState('?');
 
-  const [likes, setLikes] = useState();
-  const [dislikes, setDislikes] = useState();
-  const [usersLiked, setUsersLiked] = useState();
 
-  const HandleLike = (e) => {
+  const handleLike = (e) => {
     e.preventDefault();
     axios
-      .post(`http://localhost:3000/api/posts/${props.id}/like`, userId,{
+      .post(`http://localhost:3000/api/posts/${props.id}/like`, {
+      	like: 0,								// 0 | 1 | -1
+    	}, {
         headers: {
-          Authorization: `Basic ${token}`,
+          Authorization: `Basic ${userData.token}`,
         },
       })
       .then((res) => {
-        
-        console.log(res);
+        setLikes(res.likes);
+        setDislikes(res.dislikes);
       })
       .catch((err) => {
         console.log(err);
@@ -87,7 +71,7 @@ const Post = (props) => {
   };
 
   return (
-    <article id={props.id} className="post">
+    <article id={`post-${props.id}`} className="post">
       <div className="post__avatar">
         <img id="avatar" src={avatar} alt="" />
       </div>
@@ -117,7 +101,7 @@ const Post = (props) => {
             <span
               className="like__btn"
               onClick={(e) => {
-                HandleLike(e);
+                handleLike(e);
               }}
             >
               <i id="icon" className="fas fa-thumbs-up"></i>
@@ -129,7 +113,7 @@ const Post = (props) => {
             <span
               className="dislike__btn"
               onClick={(e) => {
-                HandleLike(e);
+                handleLike(e);
               }}
             >
               <i id="icon" className="fas fa-thumbs-down"></i>
@@ -137,27 +121,27 @@ const Post = (props) => {
             <div className="dislike__counter">{props.dislikes}</div>
           </div>
 
-          {givePermission() && (
+          {authorized && (
             <NavLink to={`/update/${props.id}`}>
               <span className="update">
-                <i id="icon" className=" fas fa-pen"></i>
+                <i id="icon" className="fas fa-pen"></i>
               </span>
             </NavLink>
           )}
 
-          {givePermission() === false && <span className="delete"></span>}
-          {givePermission() && (
+          {authorized === false && <span className="delete"></span>}
+          {authorized && (
             <span
               className="delete"
               onClick={() => {
-                DeletePost();
+                deletePost();
               }}
             >
               <i id="icon" className="fas fa-trash"></i>
             </span>
           )}
 
-          {givePermission() === false && <span className="delete"></span>}
+          {authorized === false && <span className="delete"></span>}
         </div>
       </div>
     </article>

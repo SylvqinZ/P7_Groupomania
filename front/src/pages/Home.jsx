@@ -1,32 +1,17 @@
 import Post from "../components/Post";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { getUserData, isLoggedIn } from "../utils/lib";
 
 const Home = () => {
-  let userData = JSON.parse(localStorage.getItem("userData"));
-  let userId = "";
-  let token = "";
 
-  if (userData) {
-    userId = userData.userId;
-    token = userData.token;
-  }
-
-  // IS LOGGED IN
-  function isLoggedIn() {
-    if ((userData, userId, token)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
+	const userData = getUserData();
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     axios
       .get(`http://localhost:3000/api/posts`, {
         headers: {
-          Authorization: `Basic ${token}`,
+          Authorization: `Basic ${userData.token}`,
         },
       })
       .then((res) => {
@@ -35,7 +20,7 @@ const Home = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [token]);
+  }, [userData.token]);
 
   return (
     <main>

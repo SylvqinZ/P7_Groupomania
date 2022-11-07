@@ -174,7 +174,7 @@ exports.likePost = (req, res, next) => {
             $push: { usersLiked: req.params.id },
           }
         )
-          .then(() => res.status(200).json({ message: "like added" }))
+          .then(() => res.status(200).json({ message: "like added", likes: likes, dislikes: dislikes }))
           .catch((error) => res.status(400).json({ error }));
       } else {
         if (post.usersLiked.includes(req.params.id)) {
@@ -185,7 +185,7 @@ exports.likePost = (req, res, next) => {
               $pull: { usersLiked: req.params.id },
             }
           )
-            .then(() => res.status(200).json({ message: "like removed" }))
+            .then(() => res.status(200).json({ message: "like removed", likes: likes, dislikes: dislikes }))
             .catch((error) => res.status(400).json({ error }));
         }
       }

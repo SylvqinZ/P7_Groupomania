@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import "../styles/css/style.css";
 import { useNavigate } from "react-router-dom";
 import logo from "../logo/icon-left-font1.png";
+import { getUserData, setUserData, isLoggedIn } from "../utils/lib";
 
 const Header = () => {
   window.onscroll = function () {
@@ -14,29 +15,13 @@ const Header = () => {
     }
   };
 
-  const navigate = useNavigate();
+	const navigate = useNavigate();
+	const userData = getUserData();
 
-  let userId = "";
-  let token = "";
-
-  let userData = JSON.parse(localStorage.getItem("userData"));
-  if (userData) {
-    userId = userData.userId;
-    token = userData.token;
-  }
-
-  function isLoggedIn() {
-    if ((userData, userId, token)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  const logout = () => {
-    localStorage.setItem("userData", JSON.stringify({}));
-    navigate("/login");
-  };
+	const logout = () => {
+		setUserData({});
+		navigate("/login");
+	};
 
   return (
     <header id="header" className="header">

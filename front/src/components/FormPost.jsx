@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { getUserData, setUserData, isLoggedIn, isAuthorized } from "../utils/lib";
 import axios from "axios";
 
-const Create = () => {
+const FormPost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
-  let userData = JSON.parse(localStorage.getItem("userData"));
-  let userId = "";
-  let token = "";
-
-  if (userData) {
-    userId = userData.userId;
-    token = userData.token;
-  }
+	const userData = getUserData();
+	const h1 = (id === undefined) ? "Créez votre publication" : "Modifier votre publication";
+	const button = (id === undefined) ? "Publier" : "Modifier";
 
   const [previewImage, setPreviewImage] = useState([]);
   const [post, setPost] = useState({});
@@ -34,21 +29,12 @@ const Create = () => {
     setPreviewImage(URL.createObjectURL(file));
   };
 
-  // IS LOGGED IN
-  function isLoggedIn() {
-    if ((userData, userId, token)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   useEffect(() => {
-    if (id !== post.id) {
+    if(id !== undefined) {
       axios
         .get(`http://localhost:3000/api/posts/${id}`, {
           headers: {
-            Authorization: `Basic ${token}`,
+            Authorization: `Basic ${userData.token}`,
           },
         })
         .then((res) => {
@@ -59,50 +45,40 @@ const Create = () => {
           console.log(err);
         });
     }
-  }, [id, post.id, token]);
+  }, [id, post.id, userData.token]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     let formData = new FormData();
-    formData.append("userId", userId);
+    formData.append("userId", userData.userId);
     formData.append("title", post.title);
     formData.append("text", post.text);
     formData.append("image", post.imageUrl);
 
-    if (id === post.id) {
-      axios
-        .post(`http://localhost:3000/api/posts`, formData, {
-          headers: {
-            Authorization: `Basic ${token}`,
-          },
-        })
-        .then((res) => {
-          navigate("/home");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      axios
-        .put("http://localhost:3000/api/posts/" + id, formData, {
-          headers: {
-            Authorization: `Basic ${token}`,
-          },
-        })
-        .then((res) => {
-          navigate("/home");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  };
+		const method = (id === undefined) ? 'post' : 'put';
+		let url = 'http://localhost:3000/api/posts/';
+		url += (id === undefined) ? '' : id;
+		axios({
+			method: method,
+			url: url,
+			data: formData,
+			headers: {
+				Authorization: `Basic ${userData.token}`,
+			},
+		})
+		.then((res) => {
+			navigate("/home");
+		})
+		.catch((err) => {
+			alert(err);
+			console.log(err);
+		});
+	};
 
   return (
     <main>
-      {isLoggedIn() && post.id === id && <h1>Créez votre publication</h1>}
-      {isLoggedIn() && post.id !== id && <h1>Modifier votre publication</h1>}
+      <h1>{h1}</h1>
       <div className="container">
         <form className="create" onSubmit={handleSubmit}>
           {isLoggedIn() && (
@@ -137,20 +113,9 @@ const Create = () => {
               </span>
             </label>
 
-            {isLoggedIn() && post.id !== id && (
-              <div className="create__btn">
-                <button className="btn" type="submit">
-                  Modifier
-                </button>
-              </div>
-            )}
-            {isLoggedIn() && post.id === id && (
-              <div className="create__btn">
-                <button className="btn" type="submit">
-                  Publier
-                </button>
-              </div>
-            )}
+            <div className="create__btn">
+              <button className="btn" type="submit">{button}</button>
+            </div>
           </div>
         </form>
       </div>
@@ -158,4 +123,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default FormPost;
