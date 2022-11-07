@@ -11,8 +11,8 @@ const postSchema = mongoose.Schema(
     imageUrl: { type: String, required: true },
     likes: { type: Number, default: 0 },
     dislikes: { type: Number, default: 0 },
-    usersLiked: { type: [String] },
-    usersDisliked: { type: [String] },
+    usersLiked: { type: [String], require: true },
+    usersDisliked: { type: [String], require: true },
   },
   { timestamps: true }
 );

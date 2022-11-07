@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -6,6 +6,7 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const emailReg = "^[A-Za-z0-9._-]+[@][A-Za-z0-9.-_]+[.][a-zA-Z]{2,3}$";
 
   const HandleSubmit = (e) => {
     e.preventDefault();
@@ -18,21 +19,17 @@ const LoginForm = () => {
         if (!email.match(emailReg)) {
           alert("Le format de votre email est invalide");
         } else navigate("/home");
-        // localStorage.setItem("userId", res.data.userId);
-        // localStorage.setItem("token", res.data.token);
-        // localStorage.setItem("admin", res.data.admin);
         const dataUser = {
           userId: res.data.userId,
           token: res.data.token,
           admin: res.data.admin,
         };
         localStorage.setItem("userData", JSON.stringify(dataUser));
-
-        console.log(res.data).catch((err) => {
-          console.log("error");
-          console.log(err);
-          alert("ERROR");
-        });
+      })
+      .catch((err) => {
+        console.log("error");
+        console.log(err);
+        alert("Vos identifiant sont incorrect");
       });
   };
 
@@ -52,7 +49,6 @@ const LoginForm = () => {
     }
   }
 
-  const emailReg = "^[A-Za-z0-9._-]+[@][A-Za-z0-9.-_]+[.][a-zA-Z]{2,3}$";
   if (!isLoggedIn()) {
     return (
       <main>

@@ -59,7 +59,7 @@ const Create = () => {
           console.log(err);
         });
     }
-  }, [id]);
+  }, [id, post.id, token]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -102,7 +102,7 @@ const Create = () => {
   return (
     <main>
       {isLoggedIn() && post.id === id && <h1>Créez votre publication</h1>}
-      {isLoggedIn() && post.id != id && <h1>Modifier votre publication</h1>}
+      {isLoggedIn() && post.id !== id && <h1>Modifier votre publication</h1>}
       <div className="container">
         <form className="create" onSubmit={handleSubmit}>
           {isLoggedIn() && (
@@ -137,7 +137,7 @@ const Create = () => {
               </span>
             </label>
 
-            {isLoggedIn() && post.id != id && (
+            {isLoggedIn() && post.id !== id && (
               <div className="create__btn">
                 <button className="btn" type="submit">
                   Modifier

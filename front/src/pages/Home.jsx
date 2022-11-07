@@ -35,7 +35,7 @@ const Home = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [token]);
 
   return (
     <main>
@@ -52,7 +52,6 @@ const Home = () => {
             text={post.text}
             likes={post.likes}
             dislikes={post.dislikes}
-            usersLiked={post.usersLiked}
             image={post.imageUrl}
             date={new Date(post.updatedAt).toLocaleString("fr-FR")}
           />

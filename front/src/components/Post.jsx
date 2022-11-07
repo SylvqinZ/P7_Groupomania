@@ -19,7 +19,7 @@ const Post = (props) => {
   }
 
   function givePermission() {
-    if (userId === props.userId || admin) {
+    if (userId === props.userId || admin === true) {
       return true;
     } else {
       return false;
@@ -41,7 +41,7 @@ const Post = (props) => {
         console.log("error");
         console.log(err);
       });
-  }, [props.userId]);
+  }, [props.userId, token]);
 
   // DELETE POST
   function DeletePost() {
@@ -71,10 +71,14 @@ const Post = (props) => {
   const HandleLike = (e) => {
     e.preventDefault();
     axios
-      .post(`http://localhost:3000/api/posts/${props.id}/like`, {})
+      .post(`http://localhost:3000/api/posts/${props.id}/like`, userId,{
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      })
       .then((res) => {
+        
         console.log(res);
-        console.log("res");
       })
       .catch((err) => {
         console.log(err);
@@ -122,7 +126,12 @@ const Post = (props) => {
           </div>
 
           <div className="dislike">
-            <span className="dislike__btn">
+            <span
+              className="dislike__btn"
+              onClick={(e) => {
+                HandleLike(e);
+              }}
+            >
               <i id="icon" className="fas fa-thumbs-down"></i>
             </span>
             <div className="dislike__counter">{props.dislikes}</div>

@@ -11,7 +11,6 @@ import Footer from "./components/Footer";
 import { Navigate } from "react-router-dom";
 import "./styles/css/style.css";
 
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
@@ -24,11 +23,9 @@ root.render(
         <Route path="/create" element={<Create />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/update/:id" element={<Create />} />
+        <Route path="/update/:id" element={<Update />} />
       </Routes>
-    
     </Router>
     <Footer />
   </React.StrictMode>
-  
 );
