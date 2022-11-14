@@ -76,38 +76,15 @@ const Post = (props) => {
         console.log("error");
       });
   };
-  const [btnState, setBtnState] = useState(false);
+  // const [btnState, setBtnState] = useState(false);
 
-  function handleClick() {
-    setBtnState((btnState) => !btnState);
-  }
+  // function handleClick() {
+  //   setBtnState((btnState) => !btnState);
+  // }
 
-  let toggleClassCheck = btnState ? " active" : "";
+  // let toggleClassCheck = btnState ? " active" : "";
 
-  const handleLikes = (e) => {
-    e.preventDefault();
-
-    axios
-      .post(
-        `http://localhost:3000/api/posts/${props.id}/like`,
-        {
-          like: -1,
-        },
-        {
-          headers: {
-            Authorization: `Basic ${userData.token}`,
-          },
-        }
-      )
-      .then((res) => {
-        // setLikes(res.likes);
-        // setDislikes(res.dislikes);
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log("error");
-      });
-  };
+  
 
   return (
     <article id={`post-${props.id}`} className="post">
@@ -147,7 +124,7 @@ const Post = (props) => {
             <span
               className="dislike__btn"
               onClick={(e) => {
-                handleLikes(e);
+                handleLike(e);
               }}
             >
               <i id="icon" className="fas fa-thumbs-down"></i>
