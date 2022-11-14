@@ -9,7 +9,7 @@ const Update = () => {
 		if(!isLoggedIn()) {
 			navigate('/login');
 		}
-	}, []);
+	}, [navigate]);
 	return <FormPost></FormPost>;
 };
 

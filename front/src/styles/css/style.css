@@ -132,11 +132,15 @@ html, body, form {
 }
 
 /* PAGES */
-h1, .home-message {
+h1 {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 50px;
+}
+
+.home-message {
+  margin-bottom: 600px;
 }
 
 section {
@@ -147,6 +151,20 @@ section {
   flex-direction: column-reverse;
 }
 
+@media screen and (max-width: 650px) {
+  section {
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  h1,
+.home-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+  }
+}
 .create {
   border-radius: 1rem;
   margin: auto;
@@ -258,6 +276,14 @@ input#file-input {
   width: 150px;
 }
 
+@media screen and (max-width: 650px) {
+  .create {
+    border-radius: 0;
+  }
+  .container {
+    padding: 0;
+  }
+}
 .login-form {
   margin-top: 50px;
   margin: auto;
@@ -311,6 +337,11 @@ input#file-input {
   cursor: pointer;
 }
 
+@media screen and (max-width: 650px) {
+  .login-form {
+    border-radius: 0;
+  }
+}
 .signup-form {
   margin-top: 50px;
   margin: auto;
@@ -365,6 +396,11 @@ input#file-input {
   cursor: pointer;
 }
 
+@media screen and (max-width: 650px) {
+  .signup-form {
+    border-radius: 0;
+  }
+}
 /* COMPONENTS */
 .posts {
   margin-bottom: 1rem;
@@ -452,6 +488,9 @@ input#file-input {
 .post .like__btn:hover {
   color: blue;
 }
+.post .like__btn.active {
+  color: blue;
+}
 .post .dislike {
   display: flex;
 }
@@ -459,6 +498,9 @@ input#file-input {
   margin-right: 3px;
 }
 .post .dislike__btn:hover {
+  color: red;
+}
+.post .dislike__btn.active {
   color: red;
 }
 .post .fa-thumbs-down {
@@ -471,6 +513,17 @@ input#file-input {
   color: red;
 }
 
+@media screen and (max-width: 650px) {
+  .posts {
+    margin-bottom: 0;
+    padding: 0;
+  }
+  .post {
+    border-radius: 0;
+    margin-bottom: 0px;
+    background-color: #ffffff;
+  }
+}
 /*LAYOUT*/
 .header {
   padding: 16px;
@@ -579,6 +632,26 @@ nav a.active {
 }
 
 */
+@media screen and (max-width: 650px) {
+  .header {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.5s;
+    height: 120px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    border-bottom: 1px solid #d5d2d2;
+  }
+  .header__img {
+    margin-right: 40px;
+  }
+  .nav {
+    margin-left: 50PX;
+  }
+}
 .footer {
   background-color: #ffffff;
   border-top: 1px solid #d5d2d2;
@@ -589,7 +662,6 @@ nav a.active {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: -150px;
   position: absolute;
   bottom: 0;
 }

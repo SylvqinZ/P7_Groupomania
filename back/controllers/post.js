@@ -118,43 +118,78 @@ exports.deletePost = (req, res, next) => {
     });
 };
 
-// exports.likePost = (req, res) => {
-//   Post.findOne({ _id: req.params.id })
-//   .then((post) => {
-//     if (!post.usersLiked.includes(req.params.id) && req.body.like === 1) {
-//       Post.updateOne(
-//         {_id: req.params.id },
-//         { $inc: { likes: 1 },
-//         $push: { usersLiked: post.likes}
-//       })
-//         .then(() => res.status(200).json({ message: "Like added" }))
-//         .catch((error) => res.status(400).json({ error }));
+exports.likePost = (req, res) => {
+  Post.findOne({ _id: req.params.id })
+    .then(async (post) => {
+      if (!post) {
+        res.status(404).json({ message: "post dont exist" });
+      } else {
+        let likes = post.likes;
+        let dislikes = post.dislikes;
+        let usersLiked = post.usersLiked;
+        let usersDisliked = post.usersDisliked;
 
-//     } else if (!post.usersDisliked.includes(req.params.id) && req.body.like === -1) {
-//       Post.updateOne({ _id: req.params.id }, { $inc: { dislikes: 1 }, $push: { usersDisliked: req.params.id} })
-//         .then(() => res.status(200).json({ message: "Dislike added" }))
+        switch (req.body.like) {
+          case 1:
+            usersDisliked = usersDisliked.filter((element) => element !== req.auth.userId);
+            usersLiked.addToSet(req.auth.userId);
+            break;
+          case -1:
+            usersLiked = usersLiked.filter((element) => element !== req.auth.userId);
+            usersDisliked.addToSet(req.auth.userId);
+            break;
+          case 0:
+            usersLiked = usersLiked.filter((element) => element !== req.auth.userId);
+            usersDisliked = usersDisliked.filter((element) => element !== req.auth.userId);
+            break;
+          default:
+            res.status(400).send({ message: "unknown" });
+        }
+        likes = usersLiked.length;
+        dislikes = usersDisliked.length;
+        let data = {
+          userDisliked: usersDisliked,
+          userLiked: usersLiked,
+          likes: likes,
+          dislikes: dislikes,
+        };
+        await post.updateOne(data);
+        res.status(200).send({ message: "edit like", data: data });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        error: error,
+      });
+    });
+};
+
+// exports.likePost = (req, res) => {
+//   Post.findOne({ _id: req.params.id }).then((post) => {
+//     if (!post.usersLiked.includes(req.auth.userId)) {
+//       Post.updateOne({ _id: req.params.id }, { $inc: { likes: 1 }, $push: { usersLiked: req.auth.userId } })
+//         .then(() => res.status(200).json({ message: "Like added", likes: likes, dislikes: dislikes }))
 //         .catch((error) => res.status(400).json({ error }));
-//     }
-//     else {
-//       Post.findOne({ _id: req.params.id })
-//       .then((myPost) => {
-//         if (myPost.usersLiked.includes(req.params.id)) {
-//           Post.updateOne(
-//             { _id: req.params.id },
-//              { $inc: { likes: -1 },
-//               $pull: { usersLiked: req.params.id} })
-//             .then(() => res.status(200).json({ message: "Like removed" }))
+//     } else if (!post.usersDisliked.includes(req.auth.userId)) {
+//       Post.updateOne({ _id: req.params.id }, { $inc: { dislikes: 1 }, $push: { usersDisliked: req.auth.userId } })
+//         .then(() => res.status(200).json({ message: "Dislike added", likes: likes, dislikes: dislikes }))
+//         .catch((error) => res.status(400).json({ error }));
+//     } else {
+//       Post.findOne({ _id: req.params.id }).then((myPost) => {
+//         if (myPost.usersLiked.includes(req.auth.userId)) {
+//           Post.updateOne({ _id: req.params.id }, { $inc: { likes: -1 }, $pull: { usersLiked: req.auth.userId } })
+//             .then(() => res.status(200).json({ message: "Like removed", likes: likes, dislikes: dislikes }))
 //             .catch((error) => res.status(400).json({ error }));
-//         }
-//         else if (myPost.usersDisliked.includes(req.params.id)) {
+//         } else if (myPost.usersDisliked.includes(req.auth.userId)) {
 //           Post.updateOne(
 //             { _id: req.params.id },
 //             {
 //               $inc: { dislikes: -1 },
-//               $pull: { usersDisliked: req.params.id },
+//               $pull: { usersDisliked: req.auth.userId },
 //             }
 //           )
-//             .then(() => res.status(200).json({ message: "Dislike removed" }))
+//             .then(() => res.status(200).json({ message: "Dislike removed", likes: likes, dislikes: dislikes }))
 //             .catch((error) => res.status(400).json({ error }));
 //         } else {
 //           res.status(500).json({ message: "unknown error" });
@@ -163,32 +198,5 @@ exports.deletePost = (req, res, next) => {
 //     }
 //   });
 // };
-exports.likePost = (req, res, next) => {
-  Post.findOne({ _id: req.params.id })
-    .then((post) => {
-      if (!post.usersLiked.includes(req.params.id)) {
-        Post.updateOne(
-          { _id: req.params.id },
-          {
-            $inc: { likes: +1 },
-            $push: { usersLiked: req.params.id },
-          }
-        )
-          .then(() => res.status(200).json({ message: "like added", likes: likes, dislikes: dislikes }))
-          .catch((error) => res.status(400).json({ error }));
-      } else {
-        if (post.usersLiked.includes(req.params.id)) {
-          Post.updateOne(
-            { _id: req.params.id },
-            {
-              $inc: { likes: -1 },
-              $pull: { usersLiked: req.params.id },
-            }
-          )
-            .then(() => res.status(200).json({ message: "like removed", likes: likes, dislikes: dislikes }))
-            .catch((error) => res.status(400).json({ error }));
-        }
-      }
-    })
-    .catch((error) => res.status(404).json({ error }));
-};
+
+

@@ -7,8 +7,8 @@ import { getUserData, setUserData, isLoggedIn, isAuthorized } from "../utils/lib
 
 const Post = (props) => {
   const [username, setUsername] = useState("");
-	const userData = getUserData();
-	const authorized = isAuthorized(props.userId);
+  const userData = getUserData();
+  const authorized = isAuthorized(props.userId);
 
   // SET USERNAME
   useEffect(() => {
@@ -30,39 +30,78 @@ const Post = (props) => {
 
   // DELETE POST
   function deletePost() {
-  	if(window.confirm("Supprimer la publication ?")) {
-  		axios
-  		  .delete(`http://localhost:3000/api/posts/${props.id}`, {
-  		    headers: {
-  		      Authorization: `Basic ${userData.token}`,
-  		    },
-  		  })
-  		  .then((res) => {
-  		  	document.getElementById(`post-${props.id}`).remove();
-  		  })
-  		  .catch((err) => {
-  		    console.log(err);
-  		  });
-  	}
+    if (window.confirm("Supprimer la publication ?")) {
+      axios
+        .delete(`http://localhost:3000/api/posts/${props.id}`, {
+          headers: {
+            Authorization: `Basic ${userData.token}`,
+          },
+        })
+        .then((res) => {
+          document.getElementById(`post-${props.id}`).remove();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 
-  const [likes, setLikes] = useState('?');
-  const [dislikes, setDislikes] = useState('?');
+  const [likes, setLikes] = useState(1);
+  const [dislikes, setDislikes] = useState(-1);
+  const [likeactive, setLikeactive] = useState(false);
+  const [dislikeactive, setDislikeactive] = useState(false);
 
-
+ 
   const handleLike = (e) => {
     e.preventDefault();
+
     axios
-      .post(`http://localhost:3000/api/posts/${props.id}/like`, {
-      	like: 0,								// 0 | 1 | -1
-    	}, {
-        headers: {
-          Authorization: `Basic ${userData.token}`,
+      .post(
+        `http://localhost:3000/api/posts/${props.id}/like`,
+        {
+          like: likes,
         },
-      })
+        {
+          headers: {
+            Authorization: `Basic ${userData.token}`,
+          },
+        }
+      )
       .then((res) => {
         setLikes(res.likes);
         setDislikes(res.dislikes);
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("error");
+      });
+  };
+  const [btnState, setBtnState] = useState(false);
+
+  function handleClick() {
+    setBtnState((btnState) => !btnState);
+  }
+
+  let toggleClassCheck = btnState ? " active" : "";
+
+  const handleLikes = (e) => {
+    e.preventDefault();
+
+    axios
+      .post(
+        `http://localhost:3000/api/posts/${props.id}/like`,
+        {
+          like: -1,
+        },
+        {
+          headers: {
+            Authorization: `Basic ${userData.token}`,
+          },
+        }
+      )
+      .then((res) => {
+        // setLikes(res.likes);
+        // setDislikes(res.dislikes);
       })
       .catch((err) => {
         console.log(err);
@@ -98,12 +137,7 @@ const Post = (props) => {
 
         <div className="post__btn">
           <div id="like" className="like">
-            <span
-              className="like__btn"
-              onClick={(e) => {
-                handleLike(e);
-              }}
-            >
+            <span className={`like__btn${toggleClassCheck}`} onClick={handleLike}>
               <i id="icon" className="fas fa-thumbs-up"></i>
             </span>
             <div className="like__counter">{props.likes}</div>
@@ -113,7 +147,7 @@ const Post = (props) => {
             <span
               className="dislike__btn"
               onClick={(e) => {
-                handleLike(e);
+                handleLikes(e);
               }}
             >
               <i id="icon" className="fas fa-thumbs-down"></i>

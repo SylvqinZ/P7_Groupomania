@@ -9,7 +9,7 @@ const Create = () => {
 		if(!isLoggedIn()) {
 			navigate('/login');
 		}
-	}, []);
+	}, [navigate]);
 	return <FormPost></FormPost>;
 };
 

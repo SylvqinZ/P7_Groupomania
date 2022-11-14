@@ -10,26 +10,32 @@ const SignupForm = () => {
 
   const HandleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:3000/api/auth/signup", {
-        username: username,
-        email: email,
-        password: password,
-      })
-      .then((res) => {
-        if (!email.match(emailReg)) {
-          alert("Le format de votre email est invalide");
-        } else navigate("/login");
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log("error");
-        console.log(err);
-      });
+    if (!password.match(passwordReg)) {
+      alert("Le format de votre mot de passe est invalide");
+    }
+    if (!email.match(emailReg)) {
+      alert("Le format de votre email est invalide");
+    } 
+    else {
+      axios
+        .post("http://localhost:3000/api/auth/signup", {
+          username: username,
+          email: email,
+          password: password,
+        })
+        .then((res) => {
+          navigate("/login");
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log("error");
+          console.log(err);
+        });
+    }
   };
 
   const emailReg = "^[A-Za-z0-9._-]+[@][A-Za-z0-9.-_]+[.][a-zA-Z]{2,3}$";
-
+  const passwordReg = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]{2,}).{8,100}$";
   return (
     <main>
       <h1>S'inscrire</h1>
@@ -42,7 +48,8 @@ const SignupForm = () => {
             <input
               type="text"
               id="name"
-              formcontrolname="username"
+              placeholder="Saisissez votre nom d'utilisateur"
+              formcontrolname="name"
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
@@ -54,6 +61,7 @@ const SignupForm = () => {
             <input
               type="email"
               id="email"
+              placeholder="Exemple: groupomania@gmail.com"
               formcontrolname="email"
               onChange={(e) => {
                 setEmail(e.target.value);
@@ -66,6 +74,7 @@ const SignupForm = () => {
             <input
               type="password"
               id="password"
+              placeholder="Exemple: Groupomania01"
               formcontrolname="password"
               onChange={(e) => {
                 setPassword(e.target.value);

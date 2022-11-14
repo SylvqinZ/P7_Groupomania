@@ -10,10 +10,10 @@ const LoginForm = () => {
   const emailReg = "^[A-Za-z0-9._-]+[@][A-Za-z0-9.-_]+[.][a-zA-Z]{2,3}$";
 
   useEffect(() => {
-  	if(isLoggedIn()) {
-  		navigate('/home');
-  	}
-  }, []);
+    if (isLoggedIn()) {
+      navigate("/home");
+    }
+  }, [navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,9 +26,9 @@ const LoginForm = () => {
         if (!email.match(emailReg)) {
           alert("Le format de votre email est invalide");
         } else {
-        	navigate("/home");
-        	setUserData(res.data);
-				}
+          navigate("/home");
+          setUserData(res.data);
+        }
       })
       .catch((err) => {
         console.log("error");
@@ -49,6 +49,7 @@ const LoginForm = () => {
                 type="email"
                 id="email"
                 formcontrolname="email"
+                placeholder="Saisissez votre email"
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
@@ -58,6 +59,7 @@ const LoginForm = () => {
               <label htmlFor="password">Mot de passe</label>
               <input
                 type="password"
+                placeholder="Saisissez votre mot de passe"
                 id="password"
                 formcontrolname="password"
                 onChange={(e) => {
@@ -74,7 +76,6 @@ const LoginForm = () => {
         </div>
       </main>
     );
-  } else {
   }
 };
 

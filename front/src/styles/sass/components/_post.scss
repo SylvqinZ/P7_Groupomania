@@ -5,9 +5,7 @@
 
 .post {
   border: 1px solid #d5d2d2;
-
   display: flex;
-
   margin-bottom: 10px;
   background-color: #ffffff;
   border-radius: 1rem;
@@ -31,9 +29,7 @@
   }
 
   &__avatar {
-   
     border-radius: 3rem;
-
     height: 80px;
     width: 85px;
     margin: 20px;
@@ -100,6 +96,9 @@
     &__btn:hover{
       color: blue;
     }
+    &__btn.active{
+      color: blue;
+    }
   }
   .dislike {
     display: flex;
@@ -108,6 +107,8 @@
       margin-right: 3px;
     }
     &__btn:hover {
+      color: red;
+    }&__btn.active {
       color: red;
     }
   }
@@ -121,4 +122,17 @@
   .delete:hover {
     color: red;
   }
+}
+
+@media screen and (max-width: 650px) {
+  .posts {
+    margin-bottom: 0;
+    padding: 0 
+  }
+ 
+  .post {
+    border-radius: 0;
+    margin-bottom: 0px;
+    background-color: #ffffff;
+ }
 }

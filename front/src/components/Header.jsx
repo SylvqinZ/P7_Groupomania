@@ -1,8 +1,9 @@
 import { NavLink } from "react-router-dom";
 import "../styles/css/style.css";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../logo/icon-left-font1.png";
-import { getUserData, setUserData, isLoggedIn } from "../utils/lib";
+import { setUserData, isLoggedIn } from "../utils/lib";
 
 const Header = () => {
   window.onscroll = function () {
@@ -15,17 +16,20 @@ const Header = () => {
     }
   };
 
-	const navigate = useNavigate();
-	const userData = getUserData();
+  const navigate = useNavigate();
 
-	const logout = () => {
-		setUserData({});
-		navigate("/login");
-	};
+  const goToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
+  const logout = () => {
+    setUserData({});
+    navigate("/login");
+  };
 
   return (
     <header id="header" className="header">
-      <div className="header__img">
+      <div className="header__img" onClick={goToTop}>
         <NavLink to="/home">
           <img className="header__logo" src={logo} alt="groupomania logo" />
         </NavLink>

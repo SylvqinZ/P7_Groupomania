@@ -54,3 +54,11 @@
     background-color: #ff00008e;
     cursor: pointer;
   }
+
+  @media screen and (max-width: 650px) {
+    .signup-form {
+     
+      border-radius: 0;
+      
+    }
+  }

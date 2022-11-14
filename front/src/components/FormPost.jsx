@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUserData, setUserData, isLoggedIn, isAuthorized } from "../utils/lib";
+import { getUserData, isLoggedIn } from "../utils/lib";
 import axios from "axios";
 
 const FormPost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-	const userData = getUserData();
-	const h1 = (id === undefined) ? "Créez votre publication" : "Modifier votre publication";
-	const button = (id === undefined) ? "Publier" : "Modifier";
+  const userData = getUserData();
+  const h1 = id === undefined ? "Créez votre publication" : "Modifier votre publication";
+  const button = id === undefined ? "Publier" : "Modifier";
 
   const [previewImage, setPreviewImage] = useState([]);
   const [post, setPost] = useState({});
@@ -30,7 +30,7 @@ const FormPost = () => {
   };
 
   useEffect(() => {
-    if(id !== undefined) {
+    if (id !== undefined) {
       axios
         .get(`http://localhost:3000/api/posts/${id}`, {
           headers: {
@@ -56,25 +56,25 @@ const FormPost = () => {
     formData.append("text", post.text);
     formData.append("image", post.imageUrl);
 
-		const method = (id === undefined) ? 'post' : 'put';
-		let url = 'http://localhost:3000/api/posts/';
-		url += (id === undefined) ? '' : id;
-		axios({
-			method: method,
-			url: url,
-			data: formData,
-			headers: {
-				Authorization: `Basic ${userData.token}`,
-			},
-		})
-		.then((res) => {
-			navigate("/home");
-		})
-		.catch((err) => {
-			alert(err);
-			console.log(err);
-		});
-	};
+    const method = id === undefined ? "post" : "put";
+    let url = "http://localhost:3000/api/posts/";
+    url += id === undefined ? "" : id;
+    axios({
+      method: method,
+      url: url,
+      data: formData,
+      headers: {
+        Authorization: `Basic ${userData.token}`,
+      },
+    })
+      .then((res) => {
+        navigate("/home");
+      })
+      .catch((err) => {
+        alert(err);
+        console.log(err);
+      });
+  };
 
   return (
     <main>
@@ -87,7 +87,7 @@ const FormPost = () => {
               placeholder="Votre Titre"
               name="title"
               type="text"
-              value={post.title}
+              defaultValue={post.title}
               onChange={(e) => setTitle(e.target.value)}
             />
           )}
@@ -97,7 +97,7 @@ const FormPost = () => {
             placeholder="Quoi de neuf ?"
             type="text"
             name="text"
-            value={post.text}
+            defaultValue={post.text}
             onChange={(e) => setText(e.target.value)}
           />
 
@@ -114,7 +114,9 @@ const FormPost = () => {
             </label>
 
             <div className="create__btn">
-              <button className="btn" type="submit">{button}</button>
+              <button className="btn" type="submit">
+                {button}
+              </button>
             </div>
           </div>
         </form>

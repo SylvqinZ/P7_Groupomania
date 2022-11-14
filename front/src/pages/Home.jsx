@@ -4,28 +4,30 @@ import React, { useEffect, useState } from "react";
 import { getUserData, isLoggedIn } from "../utils/lib";
 
 const Home = () => {
-
-	const userData = getUserData();
+  const userData = getUserData();
   const [posts, setPosts] = useState([]);
+
   useEffect(() => {
-    axios
-      .get(`http://localhost:3000/api/posts`, {
-        headers: {
-          Authorization: `Basic ${userData.token}`,
-        },
-      })
-      .then((res) => {
-        setPosts(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (isLoggedIn()) {
+      axios
+        .get(`http://localhost:3000/api/posts`, {
+          headers: {
+            Authorization: `Basic ${userData.token}`,
+          },
+        })
+        .then((res) => {
+          setPosts(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, [userData.token]);
 
   return (
     <main>
       {isLoggedIn() && <h1>Accueil</h1>}
-      {isLoggedIn() === false && <h1>Connectez-vous pour accéder aux publications</h1>}
+      {isLoggedIn() === false && <h1 className="home-message">Connectez-vous pour accéder aux publications</h1>}
 
       <section className="posts">
         {posts.map((post) => (

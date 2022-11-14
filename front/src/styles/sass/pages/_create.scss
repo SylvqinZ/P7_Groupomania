@@ -110,3 +110,12 @@ input#file-input {
   height: 20px;
   width: 150px;
 }
+
+@media screen and (max-width: 650px) {
+  .create {
+    border-radius: 0;
+  }
+  .container {
+    padding: 0;
+  }
+}
