@@ -43,6 +43,7 @@ select {
 }
 html {
   box-sizing: border-box;
+  height: 100vh;
 }
 *,
 *::before,
@@ -69,7 +70,7 @@ th {
 body {
   font-size: 1rem;
   text-decoration: none;
-  padding-bottom: 6rem;
+  height: 100vh;
   color: rgb(0, 0, 0);
   background-color: #e8e6e3e6;
   margin: 0;

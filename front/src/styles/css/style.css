@@ -48,6 +48,7 @@ select {
 
 html {
   box-sizing: border-box;
+  height: 100vh;
 }
 
 *,
@@ -79,7 +80,7 @@ th {
 body {
   font-size: 1rem;
   text-decoration: none;
-  padding-bottom: 6rem;
+  height: 100vh;
   color: rgb(0, 0, 0);
   background-color: rgba(232, 230, 227, 0.9019607843);
   margin: 0;
