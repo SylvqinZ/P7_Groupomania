@@ -3,12 +3,7 @@ import { NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import avatar from "../logo/Default_pfp.svg.png";
-import {
-  getUserData,
-  setUserData,
-  isLoggedIn,
-  isAuthorized,
-} from "../utils/lib";
+import { getUserData, isAuthorized } from "../utils/lib";
 
 const Post = (props) => {
   const [username, setUsername] = useState("unknown");
@@ -27,9 +22,6 @@ const Post = (props) => {
     usersDisliked.includes(userData.userId)
   );
 
-
-  
-
   // SET USERNAME
   useEffect(() => {
     axios
@@ -46,12 +38,6 @@ const Post = (props) => {
         console.log(err);
       });
   }, [props.userId, userData.token]);
-
-  // useEffect(() => {
-  //   console.log("--------------------------------");
-  //   console.log("likes", likes);
-  //   console.log("dislikes", dislikes);
-  // }, [likes, dislikes]);
 
   // DELETE POST
   function deletePost() {
@@ -70,11 +56,8 @@ const Post = (props) => {
         });
     }
   }
-  
 
-  
   const handleLike = (likeValue) => {
-    
     if (likeValue === 1) {
       likeValue = likeActive === true ? 0 : 1;
     }
@@ -95,13 +78,14 @@ const Post = (props) => {
         }
       )
       .then((res) => {
-       
         setLikes(res.data.values.likes);
         setDislikes(res.data.values.dislikes);
         setUsersLiked(res.data.values.usersLiked);
         setUsersDisliked(res.data.values.usersDisliked);
         setLikeActive(res.data.values.usersLiked.includes(userData.userId));
-        setDislikeActive(res.data.values.usersDisliked.includes(userData.userId));
+        setDislikeActive(
+          res.data.values.usersDisliked.includes(userData.userId)
+        );
         console.log(res.data.values);
       })
       .catch((err) => {
@@ -165,7 +149,7 @@ const Post = (props) => {
             </NavLink>
           )}
 
-          {authorized === false && <span className="delete"></span>}
+          {authorized === false && <span className="update"></span>}
           {authorized && (
             <span
               className="delete"

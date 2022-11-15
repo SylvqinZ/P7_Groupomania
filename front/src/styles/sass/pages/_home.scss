@@ -2,25 +2,29 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 70px;
+  margin-bottom: 30px;
 }
 .home-message {
-  margin-bottom: 691px;
+  margin-bottom: 753px;
 }
-
+.btn.btn-load {
+  justify-content: center;
+  display: flex;
+  margin: 20px auto ;
+  width: 10%
+}
 section {
   margin: auto;
   width: 100%;
   max-width: 600px;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
 }
 
 @media screen and (max-width: 650px) {
   section {
     width: 100%;
-    display: flex;
-    flex-direction: column-reverse;
+   
   }
   h1,
   .home-message {
@@ -28,5 +32,10 @@ section {
     justify-content: center;
     align-items: center;
     margin-top: 50px;
+    font-size: 18px;
+  }
+  .btn.btn-load {
+    
+    width: 30%
   }
 }

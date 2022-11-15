@@ -47,70 +47,9 @@ nav a.active {
   font-weight: bold;
 }
 
-/*@media screen and (max-width: 768px) {
-  .line {
-    width: 30px;
-    height: 3px;
-    background: white;
-    margin: 5px;
-  }
-  .header__nav {
-    position: relative;
-  }
-  .hamburger {
-    position: absolute;
-    cursor: pointer;
-    right: 5%;
-    top: 50%;
-    transform: translate(-5%, -50%);
-    z-index: 2;
-  }
-  .nav-links {
-    position: fixed;
-    background: #5b78c7;
-    height: 100vh;
-    width: 100%;
-    flex-direction: column;
-    clip-path: circle(100px at 90% -10%);
-    -webkit-clip-path: circle(100px at 90% -10%);
-    transition: all 1s ease-out;
-    pointer-events: none;
-  }
-  .nav-links.open {
-    clip-path: circle(1000px at 90% -10%);
-    -webkit-clip-path: circle(1000px at 90% -10%);
-    pointer-events: all;
-  }
-  .landing {
-    flex-direction: column;
-  }
-  .nav-links li {
-    opacity: 0;
-  }
-  .nav-links li a {
-    font-size: 25px;
-  }
-  .nav-links li:nth-child(1) {
-    transition: all 0.5s ease 0.2s;
-  }
-  .nav-links li:nth-child(2) {
-    transition: all 0.5s ease 0.4s;
-  }
-  .nav-links li:nth-child(3) {
-    transition: all 0.5s ease 0.6s;
-  }
-  .nav a {
-    display: none;
-  }
-  li.fade {
-    opacity: 1;
-  }
-}
-
-*/
 @media screen and (max-width: 650px) {
   .header {
-    
+
     display: flex;
     justify-content: space-around;
     flex-direction: column;
@@ -125,8 +64,19 @@ nav a.active {
     &__img {
       margin-right: 40px;
     }
+    
+    }
+    .nav {
+      margin-left: 50PX;
+      
+      &__signup {
+    
+      margin-right: 70px;
+      }
+      &__login {
+    
+        margin-right: 40px;
+        }
   }
-  .nav {
-    margin-left: 50PX;
-  }
+  
 }

@@ -61,7 +61,7 @@ const SignupForm = () => {
             <input
               type="email"
               id="email"
-              placeholder="Exemple: groupomania@gmail.com"
+              placeholder="bienvenue@groupomania.com"
               formcontrolname="email"
               onChange={(e) => {
                 setEmail(e.target.value);
@@ -74,7 +74,7 @@ const SignupForm = () => {
             <input
               type="password"
               id="password"
-              placeholder="Exemple: Groupomania01"
+              placeholder="(Doit contenir des majuscules, minuscules et chiffres)"
               formcontrolname="password"
               onChange={(e) => {
                 setPassword(e.target.value);
