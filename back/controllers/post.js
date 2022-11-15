@@ -48,7 +48,7 @@ exports.updatePost = (req, res, next) => {
   let postObject = { ...req.body };
   Post.findOne({ _id: req.params.id })
     .then((post) => {
-      if (req.userId !== req.auth.userId && req.auth.userId.admin === false) {
+      if (req.userId !== req.auth.userId && req.auth.admin === false) {
         res.status(403).json({ message: "Not authorized" });
        
       } else {
@@ -109,7 +109,7 @@ exports.getOnePost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id })
     .then((post) => {
-      if (post.userId != req.auth.userId && req.auth.userId.admin === false) {
+      if (post.userId != req.auth.userId && req.auth.admin === false) {
         res.status(401).json({ message: "Not authorized" });
       } else {
         const filename = post.imageUrl.split("/images/")[1];
