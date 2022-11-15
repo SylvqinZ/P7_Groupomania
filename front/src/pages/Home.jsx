@@ -33,13 +33,15 @@ const Home = () => {
         {posts.map((post) => (
           <Post
             key={post._id}
-            id={post._id}
-            userId={post.userId}
-            title={post.title}
-            text={post.text}
-            likes={post.likes}
-            dislikes={post.dislikes}
-            image={post.imageUrl}
+            id={post._id ?? ''}
+            userId={post.userId ?? ''}
+            title={post.title ?? ''}
+            text={post.text ?? ''}
+            likes={post.likes ?? 0}
+            dislikes={post.dislikes ?? 0}
+            usersLiked={post.usersLiked ?? []}
+            usersDisliked={post.usersDisliked ?? []}
+            image={post.imageUrl ?? ''}
             date={new Date(post.updatedAt).toLocaleString("fr-FR")}
           />
         ))}

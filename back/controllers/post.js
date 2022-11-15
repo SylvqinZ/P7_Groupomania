@@ -1,6 +1,7 @@
 const Post = require("../models/post");
 const User = require("../models/user");
 const fs = require("fs");
+const user = require("../models/user");
 
 exports.createPost = (req, res, next) => {
   const postObject = req.body;
@@ -25,7 +26,9 @@ exports.createPost = (req, res, next) => {
             const post = new Post({
               ...postObject,
               userId: req.body.userId,
-              imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+              imageUrl: `${req.protocol}://${req.get("host")}/images/${
+                req.file.filename
+              }`,
             });
             post
               .save()
@@ -55,10 +58,15 @@ exports.updatePost = (req, res, next) => {
 
           postObject = {
             ...req.body,
-            imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+            imageUrl: `${req.protocol}://${req.get("host")}/images/${
+              req.file.filename
+            }`,
           };
         }
-        Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
+        Post.updateOne(
+          { _id: req.params.id },
+          { ...postObject, _id: req.params.id }
+        )
           .then(() => {
             res.status(200).json({ message: "Post updated !" });
           })
@@ -122,7 +130,7 @@ exports.likePost = (req, res) => {
   Post.findOne({ _id: req.params.id })
     .then(async (post) => {
       if (!post) {
-        res.status(404).json({ message: "post dont exist" });
+        res.status(404).json({ message: "post doesn't exist" });
       } else {
         let likes = post.likes;
         let dislikes = post.dislikes;
@@ -131,16 +139,24 @@ exports.likePost = (req, res) => {
 
         switch (req.body.like) {
           case 1:
-            usersDisliked = usersDisliked.filter((element) => element !== req.auth.userId);
+            usersDisliked = usersDisliked.filter(
+              (element) => element !== req.auth.userId
+            );
             usersLiked.addToSet(req.auth.userId);
             break;
           case -1:
-            usersLiked = usersLiked.filter((element) => element !== req.auth.userId);
+            usersLiked = usersLiked.filter(
+              (element) => element !== req.auth.userId
+            );
             usersDisliked.addToSet(req.auth.userId);
             break;
           case 0:
-            usersLiked = usersLiked.filter((element) => element !== req.auth.userId);
-            usersDisliked = usersDisliked.filter((element) => element !== req.auth.userId);
+            usersLiked = usersLiked.filter(
+              (element) => element !== req.auth.userId
+            );
+            usersDisliked = usersDisliked.filter(
+              (element) => element !== req.auth.userId
+            );
             break;
           default:
             res.status(400).send({ message: "unknown" });
@@ -148,13 +164,15 @@ exports.likePost = (req, res) => {
         likes = usersLiked.length;
         dislikes = usersDisliked.length;
         let data = {
-          userDisliked: usersDisliked,
-          userLiked: usersLiked,
+          usersDisliked: usersDisliked,
+          usersLiked: usersLiked,
           likes: likes,
           dislikes: dislikes,
         };
-        await post.updateOne(data);
-        res.status(200).send({ message: "edit like", data: data });
+        await post.updateOne({... data}, {new: true,timestamps: false});
+        
+
+        res.status(200).send({ message: "edit like", values: data });
       }
     })
     .catch((error) => {
@@ -198,5 +216,3 @@ exports.likePost = (req, res) => {
 //     }
 //   });
 // };
-
-
