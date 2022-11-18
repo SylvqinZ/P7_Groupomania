@@ -1,4 +1,4 @@
-*Installation du projet*
+*INSTALLATION DU PROJET*
 
 *BACK* 
 - Situez-vous dans le dossier /back dans un terminal de commandes (cd P7_groupomania puis cd back).
@@ -10,7 +10,7 @@
 
 
 *VALIDATEUR DE MOT DE PASSE*
-A la création de votre compte veillez bien à avoir un mot de passe contenant : 
-- MININIMUM 8 caractère, 
-- Des majuscules et minuscules 
-- Au moins 2 chiffres
+- A la création de votre compte veillez bien à avoir un mot de passe contenant : 
+  - MININIMUM 8 caractère, 
+  - Des majuscules et minuscules 
+  - Au moins 2 chiffres
