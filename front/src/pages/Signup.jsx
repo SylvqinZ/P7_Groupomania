@@ -3,20 +3,67 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const SignupForm = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+
+  const [usernameError, setUsernameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const emailValidation = () => {
+    const emailReg = "^[A-Za-z0-9._-]+[@][A-Za-z0-9.-_]+[.][a-zA-Z]{2,3}$";
+    if (email.match(emailReg)) {
+      setEmailError("");
+      return true;
+    } else if (!email.match(emailReg) && emailReg != "") {
+      setEmailError("Le format de votre email est invalide");
+      return false;
+    }
+  };
+
+  const passwordValidation = () => {
+    const passwordReg = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]{2,}).{8,100}$";
+    if (password.match(passwordReg)) {
+      setPasswordError("");
+      return true;
+    } else if (!password.match(passwordReg) && passwordReg != "") {
+      setPasswordError("Le format de votre mot de passe est invalide");
+      return false;
+    }
+  };
+
+  const usernameValidation = () => {
+    const usernameReg = "^[a-zA-Z0-9._-]{3,13}$";
+    if (username.match(usernameReg)) {
+      setUsernameError("");
+      return true;
+    } else if (!username.match(usernameReg) && usernameReg != "") {
+      setUsernameError("Le format de votre nom est invalide");
+      return false;
+    }
+  };
+
+  const validForm = () => {
+    let isFormValid = true;
+
+    if (usernameValidation() === false) {
+      isFormValid = false;
+    }
+    if (emailValidation() === false) {
+      isFormValid = false;
+    }
+    if (passwordValidation() === false) {
+      isFormValid = false;
+    }
+    return isFormValid;
+  };
 
   const HandleSubmit = (e) => {
     e.preventDefault();
-    if (!password.match(passwordReg)) {
-      alert("Le format de votre mot de passe est invalide");
-    }
-    if (!email.match(emailReg)) {
-      alert("Le format de votre email est invalide");
-    } 
-    else {
+    let isFormValid = validForm();
+    if (isFormValid === true) {
       axios
         .post("http://localhost:3000/api/auth/signup", {
           username: username,
@@ -25,17 +72,18 @@ const SignupForm = () => {
         })
         .then((res) => {
           navigate("/login");
-          console.log(res);
         })
         .catch((err) => {
           console.log("error");
+
           console.log(err);
+          if ((err.status = 401)) {
+            alert("Le nom d'utilisateur ou l'email est déjà utilisé");
+          }
         });
     }
   };
 
-  const emailReg = "^[A-Za-z0-9._-]+[@][A-Za-z0-9.-_]+[.][a-zA-Z]{2,3}$";
-  const passwordReg = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]{2,}).{8,100}$";
   return (
     <main>
       <h1>S'inscrire</h1>
@@ -54,6 +102,7 @@ const SignupForm = () => {
                 setUsername(e.target.value);
               }}
             />
+            <p className="username-error">{usernameError}</p>
           </label>
 
           <label htmlFor="email" className="signup-form__group">
@@ -61,12 +110,13 @@ const SignupForm = () => {
             <input
               type="email"
               id="email"
-              placeholder="bienvenue@groupomania.com"
+              placeholder="Bienvenue@groupomania.com"
               formcontrolname="email"
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
             />
+            <p className="email-error">{emailError}</p>
           </label>
 
           <label htmlFor="password" className="signup-form__group">
@@ -74,12 +124,13 @@ const SignupForm = () => {
             <input
               type="password"
               id="password"
-              placeholder="(Doit contenir des majuscules, minuscules et chiffres)"
+              placeholder="Doit contenir des majuscules, minuscules et chiffres (minimum 8 caractère)"
               formcontrolname="password"
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
             />
+            <p className="password-error">{passwordError}</p>
           </label>
 
           <div className="signup-form__btn">

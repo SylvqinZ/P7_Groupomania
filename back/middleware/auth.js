@@ -6,9 +6,11 @@ module.exports = (req, res, next) => {
        const decodedToken = jwt.verify(token, `${process.env.DB_KEY}`,);
        const userId = decodedToken.userId;
        const admin = decodedToken.admin;
+       
        req.auth = {
            userId: userId,
-           admin: admin
+           admin:admin
+          
        };
 	next();
    } catch(error) {

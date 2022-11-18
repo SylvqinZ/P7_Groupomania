@@ -87,7 +87,7 @@ const FormPost = () => {
               placeholder="Votre Titre"
               name="title"
               type="text"
-              defaultValue={post.title}
+              value={post.title}
               onChange={(e) => setTitle(e.target.value)}
             />
           )}

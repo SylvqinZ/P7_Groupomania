@@ -26,3 +26,4 @@ export const isAuthorized = (currentUserId) => {
 	if(userData === false) return false;
 	return (userData.userId === currentUserId || userData.admin === true) ? true : false;
 }
+

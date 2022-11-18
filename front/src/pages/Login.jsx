@@ -9,6 +9,43 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const emailReg = "^[A-Za-z0-9._-]+[@][A-Za-z0-9.-_]+[.][a-zA-Z]{2,3}$";
 
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const emailValidation = () => {
+    const emailReg = "^[A-Za-z0-9._-]+[@][A-Za-z0-9.-_]+[.][a-zA-Z]{2,3}$";
+    if (email.match(emailReg)) {
+      setEmailError("");
+      return true;
+    } else if (!email.match(emailReg) && emailReg != "") {
+      setEmailError("Votre email est invalide");
+      return false;
+    }
+  };
+
+  const passwordValidation = () => {
+    const passwordReg = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]{2,}).{8,100}$";
+    if (password.match(passwordReg)) {
+      setPasswordError("");
+      return true;
+    } else if (!password.match(passwordReg) && passwordReg != "") {
+      setPasswordError("Votre mot de passe est invalide");
+      return false;
+    }
+  };
+
+  const validForm = () => {
+    let isFormValid = true;
+
+    if (emailValidation() === false) {
+      isFormValid = false;
+    }
+    if (passwordValidation() === false) {
+      isFormValid = false;
+    }
+    return isFormValid;
+  };
+
   useEffect(() => {
     if (isLoggedIn()) {
       navigate("/home");
@@ -17,24 +54,30 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:3000/api/auth/login", {
-        email: email,
-        password: password,
-      })
-      .then((res) => {
-        if (!email.match(emailReg)) {
-          alert("Le format de votre email est invalide");
-        } else {
-          navigate("/home");
-          setUserData(res.data);
-        }
-      })
-      .catch((err) => {
-        console.log("error");
-        console.log(err);
-        alert("Vos identifiant sont incorrect");
-      });
+
+    let isFormValid = validForm();
+    if (isFormValid === true) {
+      axios
+        .post("http://localhost:3000/api/auth/login", {
+          email: email,
+          password: password,
+        })
+        .then((res) => {
+          if (!email.match(emailReg)) {
+            alert("Le format de votre email est invalide");
+          } else {
+            navigate("/home");
+            setUserData(res.data);
+          }
+        })
+        .catch((err) => {
+          console.log("error");
+          console.log(err);
+          if ((err.status = 401)) {
+            alert("Vos identifiants sont incorrect");
+          }
+        });
+    }
   };
 
   if (!isLoggedIn()) {
@@ -54,6 +97,7 @@ const LoginForm = () => {
                   setEmail(e.target.value);
                 }}
               />
+              <p className="email-error">{emailError}</p>
             </label>
             <label htmlFor="password" className="login-form__group">
               <label htmlFor="password">Mot de passe</label>
@@ -66,6 +110,7 @@ const LoginForm = () => {
                   setPassword(e.target.value);
                 }}
               />
+              <p className="password-error">{passwordError}</p>
             </label>
             <div className="login-form__btn">
               <button className="btn" color="primary" type="submit">
