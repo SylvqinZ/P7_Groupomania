@@ -6,7 +6,7 @@ import { slice } from "lodash";
 const Home = () => {
   const userData = getUserData();
   const [posts, setPosts] = useState([]);
-  const [index, setIndex] = useState(3);
+  const [index, setIndex] = useState(2);
   const [isCompleted, setIsCompleted] = useState(false);
   const initialPosts = slice(posts, 0, index);
 
@@ -28,7 +28,7 @@ const Home = () => {
   }, [userData.token]);
 
   const loadMore = () => {
-    setIndex(index + 3);
+    setIndex(index + 2);
     if (index >= posts.length) {
       setIsCompleted(true);
     } else {
@@ -36,6 +36,8 @@ const Home = () => {
     }
   };
 
+
+  
   return (
     <main>
       {isLoggedIn() && <h1>Accueil</h1>}
@@ -62,12 +64,15 @@ const Home = () => {
           />
         ))}
       </section>
+ 
 
-      {isLoggedIn() && (
-        <button onClick={loadMore} type="button" className="btn btn-load">
-          Afficher plus
-        </button>
-      )}
+      { isCompleted || isLoggedIn() === false ? (
+        <div></div>
+      ):(
+      <button onClick={loadMore} type="button" className="btn btn-load">
+      Afficher plus
+    </button>)}
+
     </main>
   );
 };

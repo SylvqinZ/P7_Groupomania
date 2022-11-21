@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUserData, isLoggedIn } from "../utils/lib";
+import { getUserData } from "../utils/lib";
 import axios from "axios";
 
 const FormPost = () => {
@@ -81,23 +81,23 @@ const FormPost = () => {
       <h1>{h1}</h1>
       <div className="container">
         <form className="create" onSubmit={handleSubmit}>
-          {isLoggedIn() && (
+          
             <input
               className="create__title"
               placeholder="Votre Titre"
               name="title"
               type="text"
-              value={post.title}
+              defaultValue={post.title}
               onChange={(e) => setTitle(e.target.value)}
             />
-          )}
+          
 
           <textarea
             className="create__text"
             placeholder="Quoi de neuf ?"
             type="text"
             name="text"
-            defaultValue={post.text}
+            value={post.text}
             onChange={(e) => setText(e.target.value)}
           />
 

@@ -10,7 +10,8 @@ h1 {
 .btn.btn-load {
   justify-content: center;
   display: flex;
-  margin: 20px auto ;
+  margin: auto;
+ margin-top: 50px;
   width: 10%
 }
 section {
@@ -32,7 +33,7 @@ section {
     justify-content: center;
     align-items: center;
     margin-top: 50px;
-    font-size: 18px;
+    font-size: 16px;
   }
   .btn.btn-load {
     

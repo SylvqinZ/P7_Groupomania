@@ -38,6 +38,11 @@
  
 }
 
+.error {
+  font-size: 12px;
+  color: red;
+  margin-top: 5px;
+}
  .btn { 
     background-color: #0f14191a;
     border-radius: 1rem;
@@ -57,8 +62,18 @@
 
   @media screen and (max-width: 650px) {
     .signup-form {
-     
+      display: block;
       border-radius: 0;
+      height: 250px;
+      
+    }
+     #name, #email, #password{
+      margin: 8px;
+      font-size: 15px;
+    }
+    .btn {
+      margin-top: 15px;
+      width: 30%;
       
     }
   }

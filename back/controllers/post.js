@@ -75,7 +75,7 @@ exports.updatePost = (req, res, next) => {
   let postObject = { ...req.body };
   Post.findOne({ _id: req.params.id })
     .then((post) => {
-      if (req.userId !== req.auth.userId && req.auth.admin === false) {
+      if (post.userId != req.auth.userId && req.auth.admin === false) {
         res.status(403).json({ message: "Not authorized" });
       } else {
         if (req.file) {

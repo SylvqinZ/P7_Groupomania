@@ -52,8 +52,18 @@
   background-color: #ff00008e;
   cursor: pointer;
 }
+
 @media screen and (max-width: 650px) {
   .login-form {
     border-radius: 0;
+    display: block;
+    padding-top: 12px;
+    height: 200px;
+
+    .btn {
+      margin-top: 15px;
+      width: 30%;
+      
+    }
   }
 }

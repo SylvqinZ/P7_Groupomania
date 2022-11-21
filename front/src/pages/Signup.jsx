@@ -102,7 +102,7 @@ const SignupForm = () => {
                 setUsername(e.target.value);
               }}
             />
-            <p className="username-error">{usernameError}</p>
+            <p className="username error">{usernameError}</p>
           </label>
 
           <label htmlFor="email" className="signup-form__group">
@@ -116,7 +116,7 @@ const SignupForm = () => {
                 setEmail(e.target.value);
               }}
             />
-            <p className="email-error">{emailError}</p>
+            <p className="email error">{emailError}</p>
           </label>
 
           <label htmlFor="password" className="signup-form__group">
@@ -124,13 +124,13 @@ const SignupForm = () => {
             <input
               type="password"
               id="password"
-              placeholder="Doit contenir des majuscules, minuscules et chiffres (minimum 8 caractère)"
+              placeholder="Minimum 8 caractère avec des majuscules et chiffres "
               formcontrolname="password"
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
             />
-            <p className="password-error">{passwordError}</p>
+            <p className="password error">{passwordError}</p>
           </label>
 
           <div className="signup-form__btn">
