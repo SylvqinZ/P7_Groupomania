@@ -122,6 +122,10 @@ a {
   color: inherit;
 }
 
+.notFoundError {
+  padding-bottom: 645px;
+}
+
 main {
   width: 100%;
   overflow: auto;

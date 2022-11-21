@@ -6,7 +6,7 @@ import { slice } from "lodash";
 const Home = () => {
   const userData = getUserData();
   const [posts, setPosts] = useState([]);
-  const [index, setIndex] = useState(2);
+  const [index, setIndex] = useState(3);
   const [isCompleted, setIsCompleted] = useState(false);
   const initialPosts = slice(posts, 0, index);
 
@@ -28,7 +28,7 @@ const Home = () => {
   }, [userData.token]);
 
   const loadMore = () => {
-    setIndex(index + 2);
+    setIndex(index + 3);
     if (index >= posts.length) {
       setIsCompleted(true);
     } else {

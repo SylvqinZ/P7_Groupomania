@@ -2,6 +2,15 @@ const Post = require("../models/post");
 const User = require("../models/user");
 const fs = require("fs");
 
+async function isUserAdmin(userId) {
+  try {
+    currentUser = await User.findOne({ _id: userId });
+    return currentUser.admin;
+  } catch (err) {
+    return false;
+  }
+}
+
 exports.getAllPosts = (req, res, next) => {
   Post.find()
     .sort({ createdAt: -1 })
@@ -71,12 +80,13 @@ exports.createPost = (req, res, next) => {
   }
 };
 
-exports.updatePost = (req, res, next) => {
+exports.updatePost = async (req, res, next) => {
+  let isCurrentUserAdmin = await isUserAdmin(req.auth.userId);
   let postObject = { ...req.body };
   Post.findOne({ _id: req.params.id })
     .then((post) => {
-      if (post.userId != req.auth.userId && req.auth.admin === false) {
-        res.status(403).json({ message: "Not authorized" });
+      if (post.userId != req.auth.userId && isCurrentUserAdmin === false) {
+        res.status(401).json({ message: "Not authorized" });
       } else {
         if (req.file) {
           const filename = post.imageUrl.split("/images/")[1];
@@ -104,10 +114,11 @@ exports.updatePost = (req, res, next) => {
     });
 };
 
-exports.deletePost = (req, res, next) => {
+exports.deletePost = async (req, res, next) => {
+  let isCurrentUserAdmin = await isUserAdmin(req.auth.userId);
   Post.findOne({ _id: req.params.id })
     .then((post) => {
-      if (post.userId != req.auth.userId && req.auth.admin === false) {
+      if (post.userId != req.auth.userId && isCurrentUserAdmin === false) {
         res.status(401).json({ message: "Not authorized" });
       } else {
         const filename = post.imageUrl.split("/images/")[1];

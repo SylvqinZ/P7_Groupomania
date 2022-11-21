@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Update from "./pages/Update";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import NotFound from "./pages/NotFound";
 import { Navigate } from "react-router-dom";
 import "./styles/css/style.css";
 
@@ -25,6 +26,7 @@ root.render(
         <Route path="/login" element={<Login />} />
         <Route path="/update/:id" element={<Update />} />
         <Route path="/update" element={<Update />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
     <Footer />
